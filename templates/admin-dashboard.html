@@ -1,0 +1,2181 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - Life Connect Registry</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+
+        .btn-small {
+
+            padding: 4px 8px;
+
+            font-size: 12px;
+
+            text-decoration: none;
+
+            border-radius: 4px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 4px;
+
+            margin-right: 5px;
+
+        }
+
+        
+
+        .btn-info {
+
+            background-color: #17a2b8;
+
+            color: white;
+
+            border: 1px solid #17a2b8;
+
+        }
+
+        
+
+        .btn-info:hover {
+
+            background-color: #138496;
+
+            color: white;
+
+            text-decoration: none;
+
+        }
+
+        
+
+        .detail-item {
+
+            margin-bottom: 10px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+        
+
+        .detail-item label {
+
+            font-weight: 600;
+
+            color: #333;
+
+            min-width: 150px;
+
+        }
+
+        
+
+        .detail-item span {
+
+            flex: 1;
+
+            text-align: right;
+
+        }
+
+        
+
+        .detail-item a {
+
+            margin-left: auto;
+
+        }
+
+        
+
+        .file-links {
+
+            display: flex;
+
+            gap: 5px;
+
+            flex-wrap: wrap;
+
+        }
+
+        
+
+        .header-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+        }
+
+        
+
+        .header-actions .btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 8px 12px;
+
+            font-size: 13px;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+
+            transition: all 0.3s ease;
+
+        }
+
+        
+
+        .header-actions .btn:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+
+        }
+
+        
+
+        .header-actions .btn i {
+
+            font-size: 14px;
+
+        }
+
+        
+
+        /* Filter Dropdown Styles */
+
+        .filter-dropdown {
+
+            position: relative;
+
+            display: inline-block;
+
+        }
+
+        
+
+        .filter-dropdown .btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 16px;
+
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: all 0.3s ease;
+
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        }
+
+        
+
+        .filter-dropdown .btn:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+        }
+
+        
+
+        .filter-dropdown .btn .fa-chevron-down {
+
+            font-size: 12px;
+
+            transition: transform 0.3s ease;
+
+        }
+
+        
+
+        .filter-dropdown.active .btn .fa-chevron-down {
+
+            transform: rotate(180deg);
+
+        }
+
+        
+
+        .filter-menu {
+
+            position: absolute;
+
+            top: 100%;
+
+            right: 0;
+
+            background: white;
+
+            border-radius: 8px;
+
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+
+            border: 1px solid #e1e5e9;
+
+            min-width: 200px;
+
+            z-index: 1000;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform: translateY(-10px);
+
+            transition: all 0.3s ease;
+
+            margin-top: 5px;
+
+            display: none;
+
+        }
+
+        
+
+        .filter-dropdown.active .filter-menu {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform: translateY(0);
+
+            display: block;
+
+        }
+
+        
+
+        .filter-menu a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 16px;
+
+            color: #333;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: background-color 0.2s ease;
+
+            border-bottom: 1px solid #f0f0f0;
+
+        }
+
+        
+
+        .filter-menu a:first-child {
+
+            border-radius: 8px 8px 0 0;
+
+        }
+
+        
+
+        .filter-menu a:last-child {
+
+            border-radius: 0 0 8px 8px;
+
+            border-bottom: none;
+
+        }
+
+        
+
+        .filter-menu a:hover {
+
+            background-color: #f8f9fa;
+
+            color: #007bff;
+
+        }
+
+        
+
+        .filter-menu a i {
+
+            width: 16px;
+
+            text-align: center;
+
+            color: #666;
+
+        }
+
+        
+
+        .filter-menu a:hover i {
+
+            color: #007bff;
+
+        }
+
+        
+
+        .filter-divider {
+
+            height: 1px;
+
+            background: #e1e5e9;
+
+            margin: 4px 0;
+
+        }
+
+        
+
+        /* Filter button specific colors */
+
+        .header-actions .btn:nth-child(1) { /* Show All */
+
+            background-color: #6c757d;
+
+            color: white;
+
+            border: 1px solid #6c757d;
+
+        }
+
+        
+
+        .header-actions .btn:nth-child(2) { /* Donors */
+
+            background-color: #28a745;
+
+            color: white;
+
+            border: 1px solid #28a745;
+
+        }
+
+        
+
+        .header-actions .btn:nth-child(3) { /* Recipients */
+
+            background-color: #007bff;
+
+            color: white;
+
+            border: 1px solid #007bff;
+
+        }
+
+        
+
+        .header-actions .btn:nth-child(4) { /* Pending */
+
+            background-color: #ffc107;
+
+            color: #212529;
+
+            border: 1px solid #ffc107;
+
+        }
+
+        
+
+        .header-actions .btn:nth-child(5) { /* Approved */
+
+            background-color: #28a745;
+
+            color: white;
+
+            border: 1px solid #28a745;
+
+        }
+
+        
+
+        .header-actions .btn:nth-child(6) { /* Rejected */
+
+            background-color: #dc3545;
+
+            color: white;
+
+            border: 1px solid #dc3545;
+
+        }
+
+        
+
+        .user-basic-info {
+
+            margin-top: 10px;
+
+        }
+
+        
+
+        .name-type-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 8px;
+
+        }
+
+        
+
+        .name-type-row h4 {
+
+            margin: 0;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: #333;
+
+        }
+
+        
+
+        .user-type-badge {
+
+            padding: 4px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        }
+
+        
+
+        .urgency-badge {
+
+            padding: 3px 10px;
+
+            border-radius: 15px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+
+            animation: pulse 2s infinite;
+
+        }
+
+        
+
+        .urgency-high {
+
+            background: linear-gradient(135deg, #dc3545, #c82333);
+
+            color: white;
+
+            border: 2px solid #dc3545;
+
+            animation: urgentPulse 1s infinite;
+
+        }
+
+        
+
+        .urgency-medium {
+
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+
+            color: #212529;
+
+            border: 2px solid #ffc107;
+
+        }
+
+        
+
+        .urgency-low {
+
+            background: linear-gradient(135deg, #28a745, #218838);
+
+            color: white;
+
+            border: 2px solid #28a745;
+
+        }
+
+        
+
+        @keyframes urgentPulse {
+
+            0% { transform: scale(1); box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3); }
+
+            50% { transform: scale(1.05); box-shadow: 0 2px 12px rgba(220, 53, 69, 0.6); }
+
+            100% { transform: scale(1); box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3); }
+
+        }
+
+        
+
+        @keyframes pulse {
+
+            0% { transform: scale(1); }
+
+            50% { transform: scale(1.02); }
+
+            100% { transform: scale(1); }
+
+        }
+
+        
+
+        .donor-type {
+
+            background: linear-gradient(135deg, #28a745, #20c997);
+
+            color: white;
+
+            border: 2px solid #28a745;
+
+        }
+
+        
+
+        .recipient-type {
+
+            background: linear-gradient(135deg, #007bff, #6610f2);
+
+            color: white;
+
+            border: 2px solid #007bff;
+
+        }
+
+        
+
+        .admin-type {
+
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+
+            color: white;
+
+            border: 2px solid #dc3545;
+
+        }
+
+        
+
+        .user-type-type {
+
+            background: linear-gradient(135deg, #6c757d, #495057);
+
+            color: white;
+
+            border: 2px solid #6c757d;
+
+        }
+
+        
+
+        .info-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 400;
+
+        }
+
+        
+
+        .info-label {
+
+            font-weight: 500;
+
+            color: #666;
+
+            min-width: 100px;
+
+            font-size: 14px;
+
+        }
+
+        
+
+        .info-value {
+
+            color: #333;
+
+            text-align: right;
+
+            font-weight: 400;
+
+            font-size: 14px;
+
+        }
+
+        
+
+        /* Email and blood group - larger size */
+
+        .email-row .info-value {
+
+            color: #333;
+
+            font-size: 18px;
+
+            font-weight: 600;
+
+        }
+
+        
+
+        .blood-row .info-value {
+
+            color: #333;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+        }
+
+        
+
+        /* Labels for email and blood group - larger size */
+
+        .email-row .info-label,
+
+        .blood-row .info-label {
+
+            color: #333;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+        }
+
+        
+
+        /* Organ and Date rows for matched users */
+
+        .organ-row .info-label {
+
+            color: #007bff;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+        }
+
+        
+
+        .organ-row .info-value {
+
+            color: #007bff;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+        }
+
+        
+
+        .date-row .info-label {
+
+            color: #28a745;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+        
+
+        .date-row .info-value {
+
+            color: #28a745;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+        
+
+        /* Scroll for recent sign-ups */
+
+        .activity-list {
+
+            max-height: 280px;
+
+            overflow-y: auto;
+
+        }
+
+        
+
+        .activity-list::-webkit-scrollbar {
+
+            width: 6px;
+
+        }
+
+        
+
+        .activity-list::-webkit-scrollbar-track {
+
+            background: #f1f1f1;
+
+            border-radius: 3px;
+
+        }
+
+        
+
+        .activity-list::-webkit-scrollbar-thumb {
+
+            background: #c1c1c1;
+
+            border-radius: 3px;
+
+        }
+
+        
+
+        .activity-list::-webkit-scrollbar-thumb:hover {
+
+            background: #a8a8a8;
+
+        }
+
+        
+
+        /* Center align stat card descriptions */
+
+        .stat-card {
+
+            text-align: center;
+
+        }
+
+        
+
+        .stat-change {
+
+            text-align: center;
+
+            justify-content: center;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+
+        }
+
+        
+
+        /* Table Styles */
+
+        .users-table {
+
+            background: white;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+        }
+
+        
+
+        .table-header {
+
+            display: flex;
+
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+            color: white;
+
+            font-weight: 600;
+
+            padding: 15px 0;
+
+        }
+
+        
+
+        .table-row {
+
+            display: flex;
+
+            border-bottom: 1px solid #e0e0e0;
+
+            transition: all 0.3s ease;
+
+            align-items: center;
+
+            padding: 12px 0;
+
+        }
+
+        
+
+        .table-row:hover {
+
+            background: #f8f9fa;
+
+            transform: translateX(5px);
+
+        }
+
+        
+
+        .table-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+        
+
+        .table-row.approved {
+
+            border-left: 4px solid #28a745;
+
+        }
+
+        
+
+        .table-row.rejected {
+
+            border-left: 4px solid #dc3545;
+
+        }
+
+        
+
+        .table-row.pending {
+
+            border-left: 4px solid #ffc107;
+
+        }
+
+        
+
+        .table-cell {
+
+            flex: 1;
+
+            padding: 0 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            min-width: 0;
+
+        }
+
+        
+
+        .header-cell {
+
+            font-weight: 600;
+
+            font-size: 14px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+        }
+
+        
+
+        .table-cell:first-child {
+
+            flex: 1.5;
+
+        }
+
+        
+
+        .table-cell:nth-child(2) {
+
+            flex: 2;
+
+        }
+
+        
+
+        .table-cell:nth-child(3) {
+
+            flex: 1;
+
+        }
+
+        
+
+        .table-cell:nth-child(4) {
+
+            flex: 1;
+
+        }
+
+        
+
+        .table-cell:nth-child(5) {
+
+            flex: 1.2;
+
+        }
+
+        
+
+        .table-cell:nth-child(6) {
+
+            flex: 0.8;
+
+        }
+
+        
+
+        .table-cell:nth-child(7) {
+
+            flex: 0.8;
+
+        }
+
+        
+
+        .table-cell:last-child {
+
+            flex: 1;
+
+            justify-content: center;
+
+        }
+
+        
+
+        .actions-cell, .details-cell, .email-cell {
+
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+        }
+
+        
+
+        .status-cell {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+        
+
+        .user-id {
+
+            font-weight: 600;
+
+            color: #495057;
+
+            font-size: 14px;
+
+        }
+
+        
+
+        .user-name {
+
+            font-weight: 500;
+
+            color: #2c3e50;
+
+            font-size: 14px;
+
+        }
+
+        
+
+        .organ-info, .blood-group {
+
+            font-size: 13px;
+
+            color: #495057;
+
+            font-weight: 500;
+
+        }
+
+        
+
+        .stat-change i {
+
+            margin-right: 2px;
+
+            font-size: 12px;
+
+        }
+
+        
+
+        /* Different colors for each stat card icon */
+
+        .admin-stats .stat-card:nth-child(1) .stat-icon i { /* Total Users */
+
+            color: #6c757d !important;
+
+            font-size: 48px;
+
+        }
+
+        
+
+        .admin-stats .stat-card:nth-child(2) .stat-icon i { /* Pending Users */
+
+            color: #fd7e14 !important;
+
+            font-size: 48px;
+
+        }
+
+        
+
+        .admin-stats .stat-card:nth-child(3) .stat-icon i { /* Approved Users */
+
+            color: #20c997 !important;
+
+            font-size: 48px;
+
+        }
+
+        
+
+        .admin-stats .stat-card:nth-child(4) .stat-icon i { /* Rejected Users */
+
+            color: #e74c3c !important;
+
+            font-size: 48px;
+
+        }
+
+        
+
+        /* Remove background circles from stat icons */
+
+        .admin-stats .stat-card .stat-icon {
+
+            background: none !important;
+
+            background-color: transparent !important;
+
+            background-image: none !important;
+
+            border-radius: 0 !important;
+
+            border: none !important;
+
+            box-shadow: none !important;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <div class="nav-logo">
+
+                <i class="fas fa-heartbeat"></i>
+
+                <span>Life Connect Registry</span>
+
+            </div>
+
+            <ul class="nav-menu">
+
+                {% if user.is_authenticated %}
+
+                    <li><a href="{% url 'main:logout' %}">Logout</a></li>
+
+                {% endif %}
+
+            </ul>
+
+            <div class="hamburger">
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Admin Dashboard Header -->
+
+    <section class="admin-dashboard-header">
+
+        <div class="container">
+
+            <div class="admin-welcome">
+
+                <h1><i class="fas fa-user-shield"></i> Admin Dashboard</h1>
+
+                <p>Manage organ donation registrations and verifications</p>
+
+            </div>
+
+            <div class="admin-actions">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Dashboard Stats -->
+
+    <section class="admin-stats">
+
+        <div class="container">
+
+            <div class="stats-grid">
+
+                <div class="stat-card clickable" onclick="filterUsers('all')">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-users"></i>
+
+                    </div>
+
+                    <h3 class="stat-number">{{ total_users }}</h3>
+
+                    <p class="stat-label">Total Users</p>
+
+                    <div class="stat-change neutral">
+
+                        <i class="fas fa-info-circle"></i> Users with completed registration
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card clickable" onclick="filterUsers('pending')">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-clock"></i>
+
+                    </div>
+
+                    <h3 class="stat-number">{{ pending_verifications }}</h3>
+
+                    <p class="stat-label">Pending Users</p>
+
+                    <div class="stat-change neutral">
+
+                        <i class="fas fa-hourglass"></i> Awaiting verification
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card clickable" onclick="filterUsers('approved')">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-check-circle"></i>
+
+                    </div>
+
+                    <h3 class="stat-number">{{ approved_profiles }}</h3>
+
+                    <p class="stat-label">Approved Users</p>
+
+                    <div class="stat-change positive">
+
+                        <i class="fas fa-check"></i> Verified and active
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card clickable" onclick="filterUsers('rejected')">
+
+                    <div class="stat-icon">
+
+                        <i class="fas fa-times-circle"></i>
+
+                    </div>
+
+                    <h3 class="stat-number">{{ rejected_profiles }}</h3>
+
+                    <p class="stat-label">Rejected Users</p>
+
+                    <div class="stat-change negative">
+
+                        <i class="fas fa-times"></i> Not approved
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Admin Content -->
+
+    <section class="admin-content">
+
+        <div class="container">
+
+            <!-- Users Table -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2><i class="fas fa-users"></i> 
+
+                        {% if current_filter == 'all' %}All Users{% endif %}
+
+                        {% if current_filter == 'pending' %}Pending Users{% endif %}
+
+                        {% if current_filter == 'approved' %}Approved Users{% endif %}
+
+                        {% if current_filter == 'rejected' %}Rejected Users{% endif %}
+
+                        {% if current_filter == 'donor' %}Donor Users{% endif %}
+
+                        {% if current_filter == 'recipient' %}Recipient Users{% endif %}
+
+                        {% if current_filter == 'matched' %}Matched Users{% endif %}
+
+                        <span class="user-count">({{ users|length }})</span>
+
+                    </h2>
+
+                    <div class="header-actions">
+
+                        <div class="filter-dropdown">
+
+                            <button class="btn btn-primary" onclick="toggleFilterDropdown()">
+
+                                <i class="fas fa-filter"></i> Filter
+
+                                <i class="fas fa-chevron-down"></i>
+
+                            </button>
+
+                            <div id="filterDropdown" class="filter-menu">
+
+                                <a href="#" onclick="filterUsers('all'); closeFilterDropdown();">
+
+                                    <i class="fas fa-users"></i> All Users
+
+                                </a>
+
+                                <a href="#" onclick="filterUsers('matched'); closeFilterDropdown();">
+
+                                    <i class="fas fa-handshake"></i> Matched Users
+
+                                </a>
+
+                                <a href="#" onclick="filterUsers('donor'); closeFilterDropdown();">
+
+                                    <i class="fas fa-heart"></i> Donors
+
+                                </a>
+
+                                <a href="#" onclick="filterUsers('recipient'); closeFilterDropdown();">
+
+                                    <i class="fas fa-user-plus"></i> Recipients
+
+                                </a>
+
+                                <a href="#" onclick="filterUsers('pending'); closeFilterDropdown();">
+
+                                    <i class="fas fa-clock"></i> Pending
+
+                                </a>
+
+                                <a href="#" onclick="filterUsers('approved'); closeFilterDropdown();">
+
+                                    <i class="fas fa-check"></i> Approved
+
+                                </a>
+
+                                <a href="#" onclick="filterUsers('rejected'); closeFilterDropdown();">
+
+                                    <i class="fas fa-times"></i> Rejected
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="users-table">
+
+                        <!-- Table Header -->
+                        <div class="table-header">
+                            <div class="table-cell header-cell">Name</div>
+                            <div class="table-cell header-cell">Type</div>
+                            <div class="table-cell header-cell">Organ</div>
+                            <div class="table-cell header-cell">Blood Group</div>
+                            <div class="table-cell header-cell">Actions</div>
+                            <div class="table-cell header-cell">Details</div>
+                            <div class="table-cell header-cell">Email</div>
+                            <div class="table-cell header-cell">Status</div>
+                        </div>
+
+                        <!-- Table Rows -->
+                        {% for user in users %}
+                        <div class="table-row {% if user.verification_status == 'approved' %}approved{% elif user.verification_status == 'rejected' %}rejected{% else %}pending{% endif %}">
+                            
+                            <div class="table-cell">
+                                <span class="user-name">{{ user.get_full_name|default:user.username }}</span>
+                            </div>
+                            
+                            <div class="table-cell">
+                                <span class="user-type-badge {{ user.user_type }}-type">{{ user.get_user_type_display }}</span>
+                            </div>
+                            
+                            <div class="table-cell">
+                                {% if user.user_type == 'donor' and user.donor_profile %}
+                                    <span class="organ-info">{{ user.donor_profile.organs_to_donate|join:', ' }}</span>
+                                {% elif user.user_type == 'recipient' and user.recipient_profile %}
+                                    <span class="organ-info">{{ user.recipient_profile.get_organ_required_display }}</span>
+                                {% else %}
+                                    <span class="organ-info">-</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="table-cell">
+                                <span class="blood-group">{{ user.blood_group|default:"-" }}</span>
+                            </div>
+                            
+                            <div class="table-cell actions-cell">
+                                {% if user.verification_status == 'pending' %}
+                                <button class="btn btn-small btn-success" onclick="approveUser('{{ user.id }}')">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-small btn-danger" onclick="rejectUser('{{ user.id }}')">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="table-cell details-cell">
+                                <button class="btn btn-small btn-primary" data-url="{% url 'main:user_details' user.id %}" onclick="viewUserDetails(this)">
+                                    <i class="fas fa-eye"></i> Details
+                                </button>
+                            </div>
+                            
+                            <div class="table-cell email-cell">
+                                <button class="btn btn-small btn-info" onclick="sendEmail('{{ user.email }}')">
+                                    <i class="fas fa-envelope"></i> Email
+                                </button>
+                            </div>
+                            
+                            <div class="table-cell status-cell">
+                                <span class="status-badge {{ user.verification_status }}">{{ user.get_verification_status_display }}</span>
+                            </div>
+                            
+                        </div>
+                        {% empty %}
+                        <div class="empty-state">
+                            <i class="fas fa-users"></i>
+                            <h3>No users found</h3>
+                            <p>
+                                {% if current_filter == 'pending' %}No pending users with completed registration at this time.{% endif %}
+                                {% if current_filter == 'approved' %}No approved users with completed registration yet.{% endif %}
+                                {% if current_filter == 'rejected' %}No rejected users with completed registration yet.{% endif %}
+                                {% if current_filter == 'all' %}No users with completed registration found.{% endif %}
+                            </p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Recent Activities -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2><i class="fas fa-user-plus"></i> Recent User Registrations</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="activity-list">
+
+                        {% for user in users %}
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon registered">
+
+                                <i class="fas fa-user-plus"></i>
+
+                            </div>
+
+                            <div class="activity-content">
+
+                                <h4>{{ user.get_full_name|default:user.username }}</h4>
+
+                                <p><strong>Email:</strong> {{ user.email }}</p>
+
+                                <span class="activity-time">{{ user.date_joined|timesince }} ago</span>
+
+                            </div>
+
+                        </div>
+
+                        {% empty %}
+
+                        <p>No recent user sign-ups found.</p>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- User Details Modal -->
+
+    <div id="user-details-modal" class="modal">
+
+        <div class="modal-content large">
+
+            <div class="modal-header">
+
+                <i class="fas fa-user"></i>
+
+                <h2>User Details</h2>
+
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div id="user-details-content">
+
+                    <!-- User details will be loaded here -->
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-success" onclick="approveFromModal()">
+
+                    <i class="fas fa-check"></i> Approve
+
+                </button>
+
+                <button class="btn btn-danger" onclick="rejectFromModal()">
+
+                    <i class="fas fa-times"></i> Reject
+
+                </button>
+
+                <button class="btn btn-info" onclick="sendEmailFromModal()">
+
+                    <i class="fas fa-envelope"></i> Send Email
+
+                </button>
+
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-content">
+
+                <div class="footer-section">
+
+                    <div class="footer-logo">
+
+                        <i class="fas fa-heartbeat"></i>
+
+                        <span>Life Connect Registry</span>
+
+                    </div>
+
+                    <p>Saving lives through organ donation and transplantation services</p>
+
+                    <div class="social-links">
+
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+
+                    </div>
+
+                </div>
+
+                <div class="footer-section">
+
+                    <h3>Quick Links</h3>
+
+                    <ul>
+
+                        <li><a href="{% url 'main:home' %}">Home</a></li>
+
+                        <li><a href="{% url 'main:about' %}">About</a></li>
+
+                        <li><a href="{% url 'main:register' %}">Register</a></li>
+
+                        <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+                        <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+                    </ul>
+
+                </div>
+
+                <!-- <div class="footer-section">
+
+                    <h3>Services</h3>
+
+                    <ul>
+
+                        <li><a href="register.html">Donor Registration</a></li>
+
+                        <li><a href="register.html">Recipient Registration</a></li>
+
+                        <li><a href="#">Verification Status</a></li>
+
+                        <li><a href="#">Hospital Network</a></li>
+
+                    </ul>
+
+                </div> -->
+
+                <div class="footer-section">
+
+                    <h3>Contact Info</h3>
+
+                    <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+
+                    <p><i class="fas fa-envelope"></i> info@lifeconnect.org</p>
+
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical City</p>
+
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</p>
+
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>&copy; 2026 Life Connect Registry. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <script>
+
+        // Prevent back button access after logout
+
+        window.onload = function() {
+
+            // Prevent back button caching
+
+            window.addEventListener('pageshow', function(event) {
+
+                // If page is loaded from cache (back button)
+
+                if (event.persisted) {
+
+                    window.location.reload();
+
+                }
+
+            });
+
+            
+
+            // Disable browser back button
+
+            history.pushState(null, null, location.href);
+
+            window.onpopstate = function () {
+
+                history.go(1);
+
+            };
+
+        };
+
+        
+
+        function getCookie(name) {
+
+            let cookieValue = null;
+
+            if (document.cookie && document.cookie !== '') {
+
+                const cookies = document.cookie.split(';');
+
+                for (let i = 0; i < cookies.length; i++) {
+
+                    const cookie = cookies[i].trim();
+
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+
+                        break;
+
+                    }
+
+                }
+
+            }
+
+            return cookieValue;
+
+        }
+
+
+
+        // Approve user with confirmation
+
+        function approveUser(userId) {
+
+            // Check if button is disabled
+
+            const approveBtn = document.querySelector(`button[onclick*="approveUser('${userId}')"]`);
+
+            if (approveBtn && approveBtn.disabled) {
+
+                return;
+
+            }
+
+            // Show confirmation dialog
+
+            if (confirm('Are you sure you want to approve this user? This action will give them access to the system.')) {
+
+                fetch(`/approve-user/${userId}/`, {
+
+                    method: 'POST',
+
+                    headers: {
+
+                        'Content-Type': 'application/json',
+
+                        'X-CSRFToken': getCookie('csrftoken')
+
+                    },
+
+                    body: JSON.stringify({status: 'approved'})
+
+                })
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    if (data.success) {
+
+                        showNotification('success', 'User approved successfully!');
+
+                        // Update the row to show approved status
+
+                        updateUserRowStatus(userId, 'approved');
+
+                        // Disable approve/reject buttons after approval
+
+                        disableUserActionButtons(userId);
+
+                    } else {
+
+                        if (data.status === 'already_approved') {
+
+                            // Still reload to update UI
+
+                            location.reload();
+
+                        } else if (data.status === 'already_rejected') {
+
+                            // Still reload to update UI
+
+                            location.reload();
+
+                        } else {
+
+                            showNotification(' ', data.message || 'Failed to approve user');
+
+                        }
+
+                    }
+
+                })
+
+                .catch(error => {
+
+                    console.error('', error);
+
+                    showNotification('', 'An error occurred while approving the user');
+
+                });
+
+            }
+
+        }
+
+        // Reject user with confirmation
+
+        function rejectUser(userId) {
+
+            // Check if button is disabled
+
+            const rejectBtn = document.querySelector(`button[onclick*="rejectUser('${userId}')"]`);
+
+            if (rejectBtn && rejectBtn.disabled) {
+
+                return;
+
+            }
+
+            // Show confirmation dialog
+
+            if (confirm('Are you sure you want to reject this user? This action will deny their access to the system.')) {
+
+                fetch(`/reject-user/${userId}/`, {
+
+                    method: 'POST',
+
+                    headers: {
+
+                        'Content-Type': 'application/json',
+
+                        'X-CSRFToken': getCookie('csrftoken')
+
+                    },
+
+                    body: JSON.stringify({reason: 'Rejected by admin'})
+
+                })
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    if (data.success) {
+
+                        showNotification('success', 'User rejected successfully!');
+
+                        // Update the row to show rejected status
+
+                        updateUserRowStatus(userId, 'rejected');
+
+                        // Disable approve/reject buttons after rejection
+
+                        disableUserActionButtons(userId);
+
+                    } else {
+
+                        if (data.status === 'already_rejected') {
+
+                            // Still reload to update UI
+
+                            location.reload();
+
+                        } else if (data.status === 'already_approved') {
+
+                            // Still reload to update UI
+
+                            location.reload();
+
+                        } else {
+
+                            showNotification('error', data.message || 'Failed to reject user');
+
+                        }
+
+                    }
+
+                })
+
+                .catch(error => {
+
+                    console.error('Error:', error);
+
+                    showNotification('error', 'An error occurred while rejecting the user');
+
+                });
+
+            }
+
+        }
+
+        // Update user row status without page reload
+
+        function updateUserRowStatus(userId, status) {
+
+            const userRow = document.querySelector(`.table-row:has(button[onclick*="${userId}"])`);
+
+            if (userRow) {
+
+                // Remove existing status classes
+
+                userRow.classList.remove('approved', 'rejected', 'pending');
+
+                // Add new status class
+
+                userRow.classList.add(status);
+
+                // Update status cell if it exists
+
+                const statusCell = userRow.querySelector('.status-cell');
+
+                if (statusCell) {
+
+                    const statusBadge = statusCell.querySelector('.status-badge');
+
+                    if (statusBadge) {
+
+                        statusBadge.className = `status-badge ${status}`;
+
+                        statusBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        // Disable action buttons after status change
+
+        function disableUserActionButtons(userId) {
+
+            const approveBtn = document.querySelector(`button[onclick*="approveUser('${userId}')"]`);
+
+            const rejectBtn = document.querySelector(`button[onclick*="rejectUser('${userId}')"]`);
+
+            if (approveBtn) approveBtn.disabled = true;
+
+            if (rejectBtn) rejectBtn.disabled = true;
+
+        }
+
+        // Send email to user
+
+        function sendEmail(email) {
+
+            const subject = encodeURIComponent('Life Connect Registry - Verification Update');
+
+            const body = encodeURIComponent(`Dear User,
+
+
+Regarding your organ donation application...
+
+
+
+Best regards,
+
+Life Connect Registry Team`);
+
+            window.open(`mailto:${email}?subject=${subject}&body=${body}`);
+
+        }
+
+
+
+        // View user details
+
+        function viewUserDetails(button) {
+
+            const url = button.getAttribute('data-url');
+
+            window.location.href = url;
+
+        }
+
+
+
+        // Close modal when clicking outside
+
+        window.onclick = function(event) {
+
+            const modal = document.getElementById('user-details-modal');
+
+            if (event.target === modal) {
+
+                closeModal();
+
+            }
+
+        }
+
+
+
+        function closeModal() {
+
+            document.getElementById('user-details-modal').style.display = 'none';
+
+        }
+
+
+
+        // Filter dropdown functions
+
+        function toggleFilterDropdown() {
+
+            const dropdown = document.querySelector('.filter-dropdown');
+
+            const dropdownMenu = document.getElementById('filterDropdown');
+
+            
+
+            // Close dropdown if clicking outside
+
+            if (dropdown.classList.contains('active')) {
+
+                closeFilterDropdown();
+
+            } else {
+
+                dropdown.classList.add('active');
+
+                dropdownMenu.style.display = 'block';
+
+                
+
+                // Add click outside listener
+
+                setTimeout(() => {
+
+                    document.addEventListener('click', handleClickOutside);
+
+                }, 100);
+
+            }
+
+        }
+
+        
+
+        function closeFilterDropdown() {
+
+            const dropdown = document.querySelector('.filter-dropdown');
+
+            const dropdownMenu = document.getElementById('filterDropdown');
+
+            
+
+            dropdown.classList.remove('active');
+
+            dropdownMenu.style.display = 'none';
+
+            document.removeEventListener('click', handleClickOutside);
+
+        }
+
+        
+
+        function handleClickOutside(event) {
+
+            const dropdown = document.querySelector('.filter-dropdown');
+
+            if (!dropdown.contains(event.target)) {
+
+                closeFilterDropdown();
+
+            }
+
+        }
+
+
+
+        // Filter users based on status
+
+        function filterUsers(status) {
+
+            const url = new URL(window.location);
+
+            url.searchParams.set('filter', status);
+
+            window.location.href = url.toString();
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+

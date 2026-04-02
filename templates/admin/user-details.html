@@ -1,0 +1,2175 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Details - {{ user.get_full_name|default:user.username }} - Life Connect Registry</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+
+        .urgency-high {
+
+            background: linear-gradient(135deg, #dc3545, #c82333);
+
+            color: white;
+
+            padding: 4px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+
+            animation: urgentPulse 1s infinite;
+
+            display: inline-block;
+
+        }
+
+        
+
+        .urgency-medium {
+
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+
+            color: #212529;
+
+            padding: 4px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3);
+
+            display: inline-block;
+
+        }
+
+        
+
+        .urgency-low {
+
+            background: linear-gradient(135deg, #28a745, #218838);
+
+            color: white;
+
+            padding: 4px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+
+            display: inline-block;
+
+        }
+
+        
+
+        @keyframes urgentPulse {
+
+            0% { transform: scale(1); box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3); }
+
+            50% { transform: scale(1.05); box-shadow: 0 2px 12px rgba(220, 53, 69, 0.6); }
+
+            100% { transform: scale(1); box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3); }
+
+        }
+
+        
+
+        .highlight-field {
+
+            background-color: #f8f9fa;
+
+            padding: 4px 12px;
+
+            border-radius: 6px;
+
+            border-left: 4px solid #007bff;
+
+            font-weight: 600;
+
+            display: inline-block;
+
+            min-width: 80px;
+
+            text-align: center;
+
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+        }
+
+        
+
+        .highlight-field.urgency-high {
+
+            background-color: #ffebee;
+
+            border-left-color: #dc3545;
+
+            color: #c62828;
+
+            font-weight: 700;
+
+            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.2);
+
+        }
+
+        
+
+        .highlight-field.urgency-medium {
+
+            background-color: #fff8e1;
+
+            border-left-color: #ff9800;
+
+            color: #e65100;
+
+            font-weight: 600;
+
+            box-shadow: 0 2px 6px rgba(255, 152, 0, 0.2);
+
+        }
+
+        
+
+        .highlight-field.urgency-low {
+
+            background-color: #e8f5e8;
+
+            border-left-color: #4caf50;
+
+            color: #2e7d32;
+
+            font-weight: 600;
+
+            box-shadow: 0 2px 6px rgba(76, 175, 80, 0.2);
+
+        }
+
+        
+
+        .normal-highlight {
+
+            background-color: #f0f0f0;
+
+            padding: 2px 6px;
+
+            border-radius: 3px;
+
+            font-weight: 500;
+
+            display: inline-block;
+
+        }
+
+        
+
+        /* Documents in row layout */
+
+        .documents-preview-grid {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 20px;
+
+            justify-content: flex-start;
+
+            align-items: flex-start;
+
+        }
+
+        
+
+        .document-preview-item {
+
+            flex: 1;
+
+            min-width: 280px;
+
+            max-width: 350px;
+
+            border: 1px solid #e0e0e0;
+
+            border-radius: 8px;
+
+            padding: 15px;
+
+            background: #f8f9fa;
+
+            transition: all 0.3s ease;
+
+        }
+
+        
+
+        .document-preview-item:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+        }
+
+        
+
+        .document-preview-item h4 {
+
+            color: #2c3e50;
+
+            font-size: 16px;
+
+            margin-bottom: 12px;
+
+            font-weight: 600;
+
+        }
+
+        
+
+        .document-preview {
+
+            background: white;
+
+            border-radius: 6px;
+
+            padding: 10px;
+
+            text-align: center;
+
+            min-height: 200px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+        
+
+        .document-preview img {
+
+            max-width: 100%;
+
+            max-height: 180px;
+
+            border-radius: 4px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+        }
+
+        
+
+        .document-preview iframe {
+
+            border-radius: 4px;
+
+            border: 1px solid #e0e0e0;
+
+        }
+
+        
+
+        .no-document {
+
+            color: #6c757d;
+
+            font-size: 14px;
+
+            text-align: center;
+
+        }
+
+        
+
+        .no-document i {
+
+            font-size: 48px;
+
+            margin-bottom: 10px;
+
+            color: #dee2e6;
+
+        }
+
+        
+
+        .document-actions {
+
+            margin-top: 12px;
+
+            text-align: center;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <div class="nav-logo">
+
+                <i class="fas fa-heartbeat"></i>
+
+                <span>Life Connect Registry</span>
+
+            </div>
+
+            <ul class="nav-menu">
+
+                <li><a href="{% url 'main:admin_dashboard' %}">Admin Dashboard</a></li>
+
+                {% if user.is_authenticated %}
+
+                    <li><a href="{% url 'main:logout' %}">Logout</a></li>
+
+                {% endif %}
+
+            </ul>
+
+            <div class="hamburger">
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- User Details Header -->
+
+    <section class="admin-dashboard-header">
+
+        <div class="container">
+
+            <div class="admin-welcome">
+
+                <h1><i class="fas fa-user"></i> User Details</h1>
+
+                <p>Complete information for {{ user.get_full_name|default:user.username }}</p>
+
+            </div>
+
+            <div class="admin-actions">
+
+                <button class="btn btn-outline" onclick="window.history.back()">
+
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+
+                </button>
+
+                <button class="btn btn-primary" onclick="generateUserPDF()">
+
+                    <i class="fas fa-file-pdf"></i> Print Details
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- User Details Content -->
+
+    <section class="admin-content">
+
+        <div class="container">
+
+            <!-- Basic Information -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2><i class="fas fa-user"></i> Basic Information</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="user-details-grid">
+
+                        <div class="detail-item">
+
+                            <label>Registration ID:</label>
+
+                            <span class="highlight">
+
+                                {% if user.user_type == 'donor' %}
+
+                                    {{ profile.registration_id|default:'N/A' }}
+
+                                {% elif user.user_type == 'recipient' %}
+
+                                    {{ profile.registration_id|default:'N/A' }}
+
+                                {% else %}
+
+                                    N/A
+
+                                {% endif %}
+
+                            </span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Full Name:</label>
+
+                            <span>{{ user.get_full_name|default:user.username }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Email:</label>
+
+                            <span>{{ user.email }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Phone:</label>
+
+                            <span>{{ user.phone|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Date of Birth:</label>
+
+                            <span>{{ user.date_of_birth|date:'M d, Y'|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Blood Group:</label>
+
+                            <span>{{ user.blood_group|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Address:</label>
+
+                            <span>{{ user.address|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>User Type:</label>
+
+                            <span class="user-type-badge {{ user.user_type }}" style="
+
+                                padding: 4px 12px;
+
+                                border-radius: 20px;
+
+                                font-size: 12px;
+
+                                font-weight: 600;
+
+                                text-transform: uppercase;
+
+                                display: inline-block;
+
+                                {% if user.user_type == 'donor' %}
+
+                                    background-color: #e8f5e8;
+
+                                    color: #2e7d32;
+
+                                    border: 1px solid #4caf50;
+
+                                {% elif user.user_type == 'recipient' %}
+
+                                    background-color: #e3f2fd;
+
+                                    color: #1565c0;
+
+                                    border: 1px solid #2196f3;
+
+                                {% elif user.user_type == 'admin' %}
+
+                                    background-color: #fce4ec;
+
+                                    color: #c2185b;
+
+                                    border: 1px solid #e91e63;
+
+                                {% else %}
+
+                                    background-color: #f5f5f5;
+
+                                    color: #616161;
+
+                                    border: 1px solid #9e9e9e;
+
+                                {% endif %}
+
+                            ">{{ user.get_user_type_display }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Registration Date:</label>
+
+                            <span>{{ user.date_joined|date:'M d, Y' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Account Status:</label>
+
+                            <span class="status-badge {% if user.is_active %}approved{% else %}pending{% endif %}">
+
+                                {% if user.is_active %}Active{% else %}Inactive{% endif %}
+
+                            </span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Verification Status:</label>
+
+                            <span class="status-badge {{ user.verification_status|default:'pending' }}">{{ user.get_verification_status_display|default:'Pending' }}</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Profile Specific Information -->
+
+            {% if profile %}
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2><i class="fas fa-heartbeat"></i> {% if user.user_type == 'donor' %}Donor Information{% else %}Recipient Information{% endif %}</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% if user.user_type == 'donor' %}
+
+                    <!-- Donor Registration Fields -->
+
+                    <div class="user-details-grid">
+
+                        <div class="detail-item">
+
+                            <label>Age:</label>
+
+                            <span>{{ profile.age|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Gender:</label>
+
+                            <span>{{ profile.get_gender_display|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Organ(s) willing to donate:</label>
+
+                            <span>{{ profile.organs_to_donate|join:', '|default:'Not specified' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Medical Fitness Status:</label>
+
+                            <span class="status-badge {{ profile.medical_fitness_status|default:'pending' }}">{{ profile.get_medical_fitness_status_display|default:'Pending' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Living Donor:</label>
+
+                            <span>{% if profile.is_living_donor %}Yes{% else %}No{% endif %}</span>
+
+                        </div>
+
+                        <!-- <div class="detail-item">
+
+                            <label>Donation After Death:</label>
+
+                            <span>{% if profile.donation_after_death %}Yes{% else %}No{% endif %}</span>
+
+                        </div> -->
+
+                        <div class="detail-item">
+
+                            <label>Height:</label>
+
+                            <span>{{ profile.height|default:'Not provided' }} cm</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Weight:</label>
+
+                            <span>{{ profile.weight|default:'Not provided' }} kg</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Medical Conditions:</label>
+
+                            <span>{{ profile.medical_conditions|default:'None' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Medications:</label>
+
+                            <span>{{ profile.medications|default:'None' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Consent Given:</label>
+
+                            <span>{% if profile.consent %}Yes{% else %}No{% endif %}</span>
+
+                        </div>
+
+                    </div>
+
+                    {% elif user.user_type == 'recipient' %}
+
+                    <!-- Recipient Registration Fields -->
+
+                    <div class="user-details-grid">
+
+                        <div class="detail-item">
+
+                            <label>Age:</label>
+
+                            <span>{{ profile.age|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Gender:</label>
+
+                            <span>{{ profile.get_gender_display|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Organ Required:</label>
+
+                            <span class="highlight-field">{{ profile.get_organ_required_display|default:'Not specified' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Urgency Level:</label>
+
+                            <span class="normal-highlight">{{ profile.get_urgency_level_display|default:'Medium' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Blood Type Required:</label>
+
+                            <span>{{ profile.get_blood_type_required_display|default:'Not specified' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Height:</label>
+
+                            <span>{{ profile.height|default:'Not provided' }} cm</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Weight:</label>
+
+                            <span>{{ profile.weight|default:'Not provided' }} kg</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Doctor Name:</label>
+
+                            <span>{{ profile.doctor_name|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Hospital Address:</label>
+
+                            <span>{{ profile.hospital_address|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Transplant History:</label>
+
+                            <span>{{ profile.get_transplant_history_display|default:'Not specified' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Transplant Details:</label>
+
+                            <span>{{ profile.transplant_details|default:'None' }}</span>
+
+                        </div>
+
+                        <div class="detail-item">
+
+                            <label>Consent Given:</label>
+
+                            <span>{% if profile.consent %}Yes{% else %}No{% endif %}</span>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Uploaded Documents -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2><i class="fas fa-file-alt"></i> Uploaded Documents</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="documents-preview-grid">
+
+                        {% if user.user_type == 'donor' %}
+
+                        <!-- Donor Documents -->
+
+                        <!-- Medical Fitness Certificate -->
+
+                        <div class="document-preview-item">
+
+                            <h4>Medical Fitness Certificate</h4>
+
+                            <div class="document-preview">
+
+                                {% if profile.medical_fitness_certificate %}
+
+                                    {% if 'pdf' in profile.medical_fitness_certificate.url|lower %}
+
+                                        <iframe src="{{ profile.medical_fitness_certificate.url }}" width="100%" height="200px"></iframe>
+
+                                    {% else %}
+
+                                        <img src="{{ profile.medical_fitness_certificate.url }}" alt="Medical Certificate" style="max-width: 100%; max-height: 200px;">
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <div class="no-document">
+
+                                        <i class="fas fa-file-medical"></i>
+
+                                        <p>No medical certificate uploaded</p>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if profile.medical_fitness_certificate %}
+
+                            <div class="document-actions">
+
+                                <a href="{{ profile.medical_fitness_certificate.url }}" target="_blank" class="btn btn-small btn-primary">
+
+                                    <i class="fas fa-download"></i> Download
+
+                                </a>
+
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        
+
+                        <!-- Lab Reports -->
+
+                        <div class="document-preview-item">
+
+                            <h4>Lab Reports</h4>
+
+                            <div class="document-preview">
+
+                                {% if profile.lab_reports %}
+
+                                    {% if 'pdf' in profile.lab_reports.url|lower %}
+
+                                        <iframe src="{{ profile.lab_reports.url }}" width="100%" height="200px"></iframe>
+
+                                    {% else %}
+
+                                        <img src="{{ profile.lab_reports.url }}" alt="Lab Reports" style="max-width: 100%; max-height: 200px;">
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <div class="no-document">
+
+                                        <i class="fas fa-flask"></i>
+
+                                        <p>No lab reports uploaded</p>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if profile.lab_reports %}
+
+                            <div class="document-actions">
+
+                                <a href="{{ profile.lab_reports.url }}" target="_blank" class="btn btn-small btn-primary">
+
+                                    <i class="fas fa-download"></i> Download
+
+                                </a>
+
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        
+
+                        <!-- ID Proof -->
+
+                        <div class="document-preview-item">
+
+                            <h4>ID Proof</h4>
+
+                            <div class="document-preview">
+
+                                {% if profile.id_proof %}
+
+                                    {% if 'pdf' in profile.id_proof.url|lower %}
+
+                                        <iframe src="{{ profile.id_proof.url }}" width="100%" height="200px"></iframe>
+
+                                    {% else %}
+
+                                        <img src="{{ profile.id_proof.url }}" alt="ID Proof" style="max-width: 100%; max-height: 200px;">
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <div class="no-document">
+
+                                        <i class="fas fa-id-card"></i>
+
+                                        <p>No ID proof uploaded</p>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if profile.id_proof %}
+
+                            <div class="document-actions">
+
+                                <a href="{{ profile.id_proof.url }}" target="_blank" class="btn btn-small btn-primary">
+
+                                    <i class="fas fa-download"></i> Download
+
+                                </a>
+
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        
+
+                        {% elif user.user_type == 'recipient' %}
+
+                        <!-- Recipient Documents -->
+
+                        <!-- Medical Report -->
+
+                        <div class="document-preview-item">
+
+                            <h4>Medical Report</h4>
+
+                            <div class="document-preview">
+
+                                {% if profile.medical_report %}
+
+                                    {% if 'pdf' in profile.medical_report.url|lower %}
+
+                                        <iframe src="{{ profile.medical_report.url }}" width="100%" height="200px"></iframe>
+
+                                    {% else %}
+
+                                        <img src="{{ profile.medical_report.url }}" alt="Medical Report" style="max-width: 100%; max-height: 200px;">
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <div class="no-document">
+
+                                        <i class="fas fa-file-medical"></i>
+
+                                        <p>No medical report uploaded</p>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if profile.medical_report %}
+
+                            <div class="document-actions">
+
+                                <a href="{{ profile.medical_report.url }}" target="_blank" class="btn btn-small btn-primary">
+
+                                    <i class="fas fa-download"></i> Download
+
+                                </a>
+
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        
+
+                        <!-- Fitness Certificate -->
+
+                        <div class="document-preview-item">
+
+                            <h4>Fitness Certificate</h4>
+
+                            <div class="document-preview">
+
+                                {% if profile.fitness_certificate %}
+
+                                    {% if 'pdf' in profile.fitness_certificate.url|lower %}
+
+                                        <iframe src="{{ profile.fitness_certificate.url }}" width="100%" height="200px"></iframe>
+
+                                    {% else %}
+
+                                        <img src="{{ profile.fitness_certificate.url }}" alt="Fitness Certificate" style="max-width: 100%; max-height: 200px;">
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <div class="no-document">
+
+                                        <i class="fas fa-file-medical"></i>
+
+                                        <p>No fitness certificate uploaded</p>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if profile.fitness_certificate %}
+
+                            <div class="document-actions">
+
+                                <a href="{{ profile.fitness_certificate.url }}" target="_blank" class="btn btn-small btn-primary">
+
+                                    <i class="fas fa-download"></i> Download
+
+                                </a>
+
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        
+
+                        <!-- ID Proof -->
+
+                        <div class="document-preview-item">
+
+                            <h4>ID Proof</h4>
+
+                            <div class="document-preview">
+
+                                {% if profile.id_proof %}
+
+                                    {% if 'pdf' in profile.id_proof.url|lower %}
+
+                                        <iframe src="{{ profile.id_proof.url }}" width="100%" height="200px"></iframe>
+
+                                    {% else %}
+
+                                        <img src="{{ profile.id_proof.url }}" alt="ID Proof" style="max-width: 100%; max-height: 200px;">
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <div class="no-document">
+
+                                        <i class="fas fa-id-card"></i>
+
+                                        <p>No ID proof uploaded</p>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if profile.id_proof %}
+
+                            <div class="document-actions">
+
+                                <a href="{{ profile.id_proof.url }}" target="_blank" class="btn btn-small btn-primary">
+
+                                    <i class="fas fa-download"></i> Download
+
+                                </a>
+
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Description Aside -->
+
+    <aside class="description-aside" style="display: flex; justify-content: center; align-items: center; padding: 20px; background-color: #f8f9fa; margin: 20px auto; border-radius: 8px; max-width: 800px;">
+
+        <div style="text-align: center;">
+
+            <h3 style="color: #333; margin-bottom: 15px;">User Summary</h3>
+
+            <p style="color: #666; line-height: 1.6; margin: 0 auto;">
+
+                {% if profile %}
+
+                    {% if user.user_type == 'donor' %}
+
+                        This donor has registered to save lives through organ donation. 
+
+                        {% if profile.organs_to_donate %}
+
+                            They have generously offered to donate: {{ profile.organs_to_donate|join:', ' }}.
+
+                        {% endif %}
+
+                        {% if profile.medical_fitness_status == 'fit' %}
+
+                            The donor has been medically cleared for donation.
+
+                        {% endif %}
+
+                    {% elif user.user_type == 'recipient' %}
+
+                        This recipient is in need of a life-saving organ transplant.
+
+                        {% if profile.organ_required %}
+
+                            They require: {{ profile.get_organ_required_display }}.
+
+                        {% endif %}
+
+                        {% if profile.urgency_level %}
+
+                            Urgency level: {{ profile.get_urgency_level_display }}.
+
+                        {% endif %}
+
+                    {% endif %}
+
+                {% else %}
+
+                    User profile information is not available.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-content">
+
+                <div class="footer-section">
+
+                    <div class="footer-logo">
+
+                        <i class="fas fa-heartbeat"></i>
+
+                        <span>Life Connect Registry</span>
+
+                    </div>
+
+                    <p>Saving lives through organ donation and transplantation services</p>
+
+                    <div class="social-links">
+
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+
+                    </div>
+
+                </div>
+
+                <div class="footer-section">
+
+                    <h3>Quick Links</h3>
+
+                    <ul>
+
+                        <li><a href="{% url 'main:home' %}">Home</a></li>
+
+                        <li><a href="{% url 'main:about' %}">About Us</a></li>
+
+                        <li><a href="{% url 'main:register' %}">Register</a></li>
+
+                        <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+                        <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+                    </ul>
+
+                </div>
+
+                <!-- <div class="footer-section">
+
+                    <h3>Services</h3>
+
+                    <ul>
+
+                        <li><a href="{% url 'main:register' %}">Donor Registration</a></li>
+
+                        <li><a href="{% url 'main:register' %}">Recipient Registration</a></li>
+
+                        <li><a href="#">Verification Status</a></li>
+
+                        <li><a href="#">Hospital Network</a></li>
+
+                    </ul>
+
+                </div> -->
+
+                <div class="footer-section">
+
+                    <h3>Contact Info</h3>
+
+                    <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+
+                    <p><i class="fas fa-envelope"></i> info@lifeconnect.org</p>
+
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical City</p>
+
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</p>
+
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>&copy; 2026 Life Connect Registry. All rights reserved.</p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- Hidden data for JavaScript -->
+    <div id="document-data" style="display: none;" 
+         data-id-proof="{% if profile.id_proof %}{{ profile.id_proof.url }}{% endif %}"
+         data-medical-fitness-certificate="{% if profile.medical_fitness_certificate %}{{ profile.medical_fitness_certificate.url }}{% endif %}"
+         data-lab-reports="{% if profile.lab_reports %}{{ profile.lab_reports.url }}{% endif %}"
+         data-medical-report="{% if profile.medical_report %}{{ profile.medical_report.url }}{% endif %}"
+         data-fitness-certificate="{% if profile.fitness_certificate %}{{ profile.fitness_certificate.url }}{% endif %}"
+         data-organs-to-donate="{% if profile.organs_to_donate %}{{ profile.organs_to_donate|join:'|' }}{% endif %}"
+         data-medical-fitness-status="{% if profile.medical_fitness_status %}{{ profile.medical_fitness_status }}{% endif %}"
+         data-living-donor="{% if profile.is_living_donor %}true{% else %}false{% endif %}"
+         data-height="{% if profile.height %}{{ profile.height }}{% endif %}"
+         data-weight="{% if profile.weight %}{{ profile.weight }}{% endif %}"
+         data-organ-required="{% if profile.organ_required %}{{ profile.organ_required }}{% endif %}"
+         data-urgency-level="{% if profile.urgency_level %}{{ profile.urgency_level }}{% endif %}"
+         data-blood-type-required="{% if profile.blood_type_required %}{{ profile.blood_type_required }}{% endif %}"
+         data-doctor-name="{% if profile.doctor_name %}{{ profile.doctor_name }}{% endif %}"
+         data-hospital-address="{% if profile.hospital_address %}{{ profile.hospital_address }}{% endif %}">
+    </div>
+
+    <script>
+
+        // Generate PDF with all user details and documents
+        function generateUserPDF() {
+            try {
+                // Collect all user information
+                const userInfo = {
+                    fullName: '{{ user.get_full_name|default:user.username }}',
+                    email: '{{ user.email }}',
+                    userId: '{{ user.id }}',
+                    userType: '{{ user.user_type }}',
+                    registrationId: '{{ profile.registration_id|default:"N/A" }}',
+                    bloodGroup: '{{ user.blood_group|default:"Not provided" }}',
+                    dateOfBirth: '{{ user.date_of_birth|date:"M d, Y"|default:"Not provided" }}',
+                    address: '{{ user.address|default:"Not provided" }}',
+                    phone: '{{ user.phone|default:"Not provided" }}',
+                    accountStatus: '{% if user.is_active %}Active{% else %}Inactive{% endif %}',
+                    verificationStatus: '{{ user.verification_status|default:"pending" }}',
+                    registrationDate: '{{ user.date_joined|date:"F j, Y, g:i a" }}',
+                    registrationTime: '{{ user.date_joined|time:"g:i A" }}'
+                };
+                
+                // Get document URLs and profile details from data attributes
+                const idProofUrl = document.querySelector('[data-id-proof]')?.getAttribute('data-id-proof') || null;
+                const medicalFitnessCertificateUrl = document.querySelector('[data-medical-fitness-certificate]')?.getAttribute('data-medical-fitness-certificate') || null;
+                const labReportsUrl = document.querySelector('[data-lab-reports]')?.getAttribute('data-lab-reports') || null;
+                const medicalReportUrl = document.querySelector('[data-medical-report]')?.getAttribute('data-medical-report') || null;
+                const fitnessCertificateUrl = document.querySelector('[data-fitness-certificate]')?.getAttribute('data-fitness-certificate') || null;
+                
+                // Get profile details
+                const organsToDonate = document.querySelector('[data-organs-to-donate]')?.getAttribute('data-organs-to-donate') || null;
+                const medicalFitnessStatus = document.querySelector('[data-medical-fitness-status]')?.getAttribute('data-medical-fitness-status') || null;
+                const livingDonor = document.querySelector('[data-living-donor]')?.getAttribute('data-living-donor') === 'true';
+                const height = document.querySelector('[data-height]')?.getAttribute('data-height') || null;
+                const weight = document.querySelector('[data-weight]')?.getAttribute('data-weight') || null;
+                const organRequired = document.querySelector('[data-organ-required]')?.getAttribute('data-organ-required') || null;
+                const urgencyLevel = document.querySelector('[data-urgency-level]')?.getAttribute('data-urgency-level') || null;
+                const bloodTypeRequired = document.querySelector('[data-blood-type-required]')?.getAttribute('data-blood-type-required') || null;
+                const doctorName = document.querySelector('[data-doctor-name]')?.getAttribute('data-doctor-name') || null;
+                const hospitalAddress = document.querySelector('[data-hospital-address]')?.getAttribute('data-hospital-address') || null;
+                
+                // Add document URLs and profile details to userInfo
+                userInfo.idProofUrl = idProofUrl;
+                userInfo.medicalFitnessCertificateUrl = medicalFitnessCertificateUrl;
+                userInfo.labReportsUrl = labReportsUrl;
+                userInfo.medicalReportUrl = medicalReportUrl;
+                userInfo.fitnessCertificateUrl = fitnessCertificateUrl;
+                userInfo.organsToDonate = organsToDonate;
+                userInfo.medicalFitnessStatus = medicalFitnessStatus;
+                userInfo.livingDonor = livingDonor;
+                userInfo.height = height;
+                userInfo.weight = weight;
+                userInfo.organRequired = organRequired;
+                userInfo.urgencyLevel = urgencyLevel;
+                userInfo.bloodTypeRequired = bloodTypeRequired;
+                userInfo.doctorName = doctorName;
+                userInfo.hospitalAddress = hospitalAddress;
+                
+                // Use jsPDF to create a proper PDF
+                loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', function() {
+                    loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', function() {
+                        createPDFWithDocuments(userInfo);
+                    });
+                });
+                
+            } catch (error) {
+                alert('Error generating PDF: ' + error.message);
+            }
+        }
+        
+        // Load external script
+        function loadScript(url, callback) {
+            const script = document.createElement('script');
+            script.src = url;
+            script.onload = callback;
+            document.head.appendChild(script);
+        }
+        
+        // Create PDF with documents
+        async function createPDFWithDocuments(userInfo) {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            
+            // Professional header with logo and title
+            pdf.setFillColor(41, 128, 185); // Blue header
+            pdf.rect(0, 0, 210, 40, 'F');
+            
+            pdf.setFontSize(24);
+            pdf.setTextColor(255, 255, 255); // White text
+            pdf.text('Life Connect Registry', 105, 20, { align: 'center' });
+            pdf.setFontSize(16);
+            pdf.text('User Details Report', 105, 30, { align: 'center' });
+            
+            // Report metadata
+            pdf.setTextColor(0, 0, 0); // Black text
+            pdf.setFontSize(10);
+            pdf.text(`Generated: ${new Date().toLocaleString()}`, 20, 50);
+            pdf.text(`Report ID: ${userInfo.userId}-${Date.now()}`, 140, 50);
+            
+            // User summary card
+            pdf.setFillColor(245, 245, 245); // Light gray background
+            pdf.rect(15, 55, 180, 30, 'F');
+            pdf.setLineWidth(0.5);
+            pdf.setDrawColor(200, 200, 200); // Light border
+            pdf.rect(15, 55, 180, 30, 'S');
+            
+            pdf.setFontSize(14);
+            pdf.setFont(undefined, 'bold');
+            pdf.text(userInfo.fullName, 25, 70);
+            pdf.setFontSize(10);
+            pdf.setFont(undefined, 'normal');
+            pdf.text(`ID: ${userInfo.userId} | ${userInfo.userType.toUpperCase()}`, 25, 78);
+            
+            // Handle long email text to prevent border touching
+            const maxEmailWidth = 155;
+            if (pdf.getTextWidth(userInfo.email) > maxEmailWidth) {
+                // Truncate long email with ellipsis
+                let truncatedEmail = userInfo.email;
+                while (pdf.getTextWidth(truncatedEmail + '...') > maxEmailWidth && truncatedEmail.length > 0) {
+                    truncatedEmail = truncatedEmail.slice(0, -1);
+                }
+                pdf.text(truncatedEmail + '...', 25, 85);
+            } else {
+                pdf.text(`Email: ${userInfo.email}`, 25, 85);
+            }
+            
+            let yPosition = 100;
+            const lineHeight = 7;
+            const sectionSpacing = 12;
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const bottomMargin = 50;
+            
+            // Function to check if we need a new page
+            function checkPageBreak(requiredSpace) {
+                if (yPosition + requiredSpace > pageHeight - bottomMargin) {
+                    pdf.addPage();
+                    // Add header to new page
+                    pdf.setFillColor(41, 128, 185);
+                    pdf.rect(0, 0, 210, 20, 'F');
+                    pdf.setFontSize(12);
+                    pdf.setTextColor(255, 255, 255);
+                    pdf.text('User Details Report (Continued)', 105, 13, { align: 'center' });
+                    pdf.setTextColor(0, 0, 0);
+                    yPosition = 30;
+                    return true;
+                }
+                return false;
+            }
+            
+            // Section header styling
+            function addSectionHeader(title, icon) {
+                checkPageBreak(20);
+                pdf.setFillColor(41, 128, 185);
+                pdf.rect(15, yPosition - 8, 180, 12, 'F');
+                pdf.setFontSize(12);
+                pdf.setTextColor(255, 255, 255);
+                pdf.setFont(undefined, 'bold');
+                pdf.text(title, 20, yPosition); // Removed icon
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFont(undefined, 'normal');
+                yPosition += sectionSpacing;
+            }
+            
+            // Personal Information Section
+            addSectionHeader('Personal Information', '👤');
+            
+            pdf.setFillColor(249, 249, 249);
+            pdf.rect(15, yPosition - 5, 180, 52, 'F');
+            pdf.setLineWidth(0.3);
+            pdf.setDrawColor(220, 220, 220);
+            pdf.rect(15, yPosition - 5, 180, 52, 'S');
+            
+            const personalInfo = [
+                ['Full Name:', userInfo.fullName],
+                ['User ID:', userInfo.userId],
+                ['Email:', userInfo.email],
+                ['Phone:', userInfo.phone],
+                ['Date of Birth:', userInfo.dateOfBirth],
+                ['Address:', userInfo.address]
+            ];
+            
+            personalInfo.forEach(([label, value], index) => {
+                const yPos = yPosition + 2 + (index * 8);
+                pdf.setFont(undefined, 'bold');
+                pdf.setFontSize(9);
+                pdf.text(label, 20, yPos);
+                pdf.setFont(undefined, 'normal');
+                
+                // Handle long text by wrapping if needed
+                const maxWidth = 115;
+                let xPosition = 75;
+                
+                if (pdf.getTextWidth(value) > maxWidth) {
+                    // Split long text
+                    const words = value.split(' ');
+                    let currentLine = '';
+                    let startY = yPos;
+                    
+                    words.forEach((word, index) => {
+                        const testLine = currentLine + (index > 0 ? ' ' : '') + word;
+                        if (pdf.getTextWidth(testLine) > maxWidth) {
+                            if (currentLine) {
+                                pdf.text(currentLine, xPosition, startY);
+                                startY += lineHeight;
+                                currentLine = word;
+                            } else {
+                                pdf.text(word, xPosition, startY);
+                                startY += lineHeight;
+                            }
+                        } else {
+                            currentLine = testLine;
+                        }
+                    });
+                    if (currentLine) {
+                        pdf.text(currentLine, xPosition, startY);
+                    }
+                } else {
+                    pdf.text(value, xPosition, yPos);
+                }
+            });
+            
+            yPosition += 57;
+            
+            // Account Information Section
+            addSectionHeader('Account Information', '🔐');
+            
+            pdf.setFillColor(249, 249, 249);
+            pdf.rect(15, yPosition - 5, 180, 36, 'F');
+            pdf.setLineWidth(0.3);
+            pdf.setDrawColor(220, 220, 220);
+            pdf.rect(15, yPosition - 5, 180, 36, 'S');
+            
+            const accountInfo = [
+                ['Account Type:', userInfo.userType],
+                ['Registration ID:', userInfo.registrationId],
+                ['Blood Group:', userInfo.bloodGroup],
+                ['Account Status:', userInfo.accountStatus],
+                ['Verification Status:', userInfo.verificationStatus],
+                ['Registration Date:', userInfo.registrationDate]
+            ];
+            
+            accountInfo.forEach(([label, value], index) => {
+                const yPos = yPosition + 2 + (index * 6);
+                pdf.setFont(undefined, 'bold');
+                pdf.setFontSize(9);
+                pdf.text(label, 20, yPos);
+                pdf.setFont(undefined, 'normal');
+                pdf.text(value, 75, yPos);
+            });
+            
+            yPosition += 41;
+            
+            // Profile Details Section
+            addSectionHeader('Profile Details', '📋');
+            
+            pdf.setFillColor(249, 249, 249);
+            let profileHeight = 36;
+            
+            if (userInfo.userType === 'donor') {
+                profileHeight = 42;
+                const donorInfo = [
+                    ['Organs to Donate:', userInfo.organsToDonate || 'Not specified'],
+                    ['Medical Fitness Status:', userInfo.medicalFitnessStatus || 'Not specified'],
+                    ['Living Donor:', userInfo.livingDonor ? 'Yes' : 'No'],
+                    ['Height:', userInfo.height ? `${userInfo.height} cm` : 'Not provided'],
+                    ['Weight:', userInfo.weight ? `${userInfo.weight} kg` : 'Not provided']
+                ];
+                
+                pdf.rect(15, yPosition - 5, 180, profileHeight, 'F');
+                pdf.setLineWidth(0.3);
+                pdf.setDrawColor(220, 220, 220);
+                pdf.rect(15, yPosition - 5, 180, profileHeight, 'S');
+                
+                donorInfo.forEach(([label, value], index) => {
+                    const yPos = yPosition + 2 + (index * 6);
+                    pdf.setFont(undefined, 'bold');
+                    pdf.setFontSize(9);
+                    pdf.text(label, 20, yPos);
+                    pdf.setFont(undefined, 'normal');
+                    
+                    // Handle long organs to donate text
+                    if (label === 'Organs to Donate:' && value && value.includes('|')) {
+                        const organs = value.split('|');
+                        organs.forEach((organ, index) => {
+                            if (index === 0) {
+                                pdf.text(organ.trim(), 75, yPos);
+                            } else {
+                                pdf.text(organ.trim(), 75, yPos + (index * 6));
+                            }
+                        });
+                    } else {
+                        pdf.text(value, 75, yPos);
+                    }
+                });
+            } else if (userInfo.userType === 'recipient') {
+                profileHeight = 48;
+                const recipientInfo = [
+                    ['Organ Required:', userInfo.organRequired || 'Not specified'],
+                    ['Urgency Level:', userInfo.urgencyLevel || 'Not specified'],
+                    ['Blood Type Required:', userInfo.bloodTypeRequired || 'Not specified'],
+                    ['Height:', userInfo.height ? `${userInfo.height} cm` : 'Not provided'],
+                    ['Weight:', userInfo.weight ? `${userInfo.weight} kg` : 'Not provided'],
+                    ['Doctor Name:', userInfo.doctorName || 'Not provided'],
+                    ['Hospital Address:', userInfo.hospitalAddress || 'Not provided']
+                ];
+                
+                pdf.rect(15, yPosition - 5, 180, profileHeight, 'F');
+                pdf.setLineWidth(0.3);
+                pdf.setDrawColor(220, 220, 220);
+                pdf.rect(15, yPosition - 5, 180, profileHeight, 'S');
+                
+                recipientInfo.forEach(([label, value], index) => {
+                    const yPos = yPosition + 2 + (index * 6);
+                    pdf.setFont(undefined, 'bold');
+                    pdf.setFontSize(9);
+                    pdf.text(label, 20, yPos);
+                    pdf.setFont(undefined, 'normal');
+                    
+                    // Handle long hospital address
+                    if (label === 'Hospital Address:' && value && value.length > 30) {
+                        const maxWidth = 115;
+                        let xPosition = 75;
+                        let currentLine = '';
+                        let startY = yPos;
+                        
+                        const words = value.split(' ');
+                        words.forEach((word, index) => {
+                            const testLine = currentLine + (index > 0 ? ' ' : '') + word;
+                            if (pdf.getTextWidth(testLine) > maxWidth) {
+                                if (currentLine) {
+                                    pdf.text(currentLine, xPosition, startY);
+                                    startY += lineHeight;
+                                    currentLine = word;
+                                } else {
+                                    pdf.text(word, xPosition, startY);
+                                    startY += lineHeight;
+                                }
+                            } else {
+                                currentLine = testLine;
+                            }
+                        });
+                        if (currentLine) {
+                            pdf.text(currentLine, xPosition, startY);
+                        }
+                    } else {
+                        pdf.text(value, 75, yPos);
+                    }
+                });
+            }
+            
+            yPosition += profileHeight + 12;
+            
+            // Documents Section (Only show documents that actually exist for this user)
+            addSectionHeader('Uploaded Documents', '📁');
+            
+            // Collect only available documents based on user type
+            const availableDocuments = [];
+            if (userInfo.idProofUrl && userInfo.idProofUrl.trim() !== '') {
+                availableDocuments.push(['ID Proof:', '✅ Available']);
+            }
+            
+            // Donor documents
+            if (userInfo.userType === 'donor') {
+                if (userInfo.medicalFitnessCertificateUrl && userInfo.medicalFitnessCertificateUrl.trim() !== '') {
+                    availableDocuments.push(['Medical Fitness Certificate:', '✅ Available']);
+                }
+                if (userInfo.labReportsUrl && userInfo.labReportsUrl.trim() !== '') {
+                    availableDocuments.push(['Lab Reports:', '✅ Available']);
+                }
+            }
+            
+            // Recipient documents
+            if (userInfo.userType === 'recipient') {
+                if (userInfo.fitnessCertificateUrl && userInfo.fitnessCertificateUrl.trim() !== '') {
+                    availableDocuments.push(['Fitness Certificate:', '✅ Available']);
+                }
+                if (userInfo.medicalReportUrl && userInfo.medicalReportUrl.trim() !== '') {
+                    availableDocuments.push(['Medical Report:', '✅ Available']);
+                }
+            }
+            
+            // Only show documents section if there are available documents
+            if (availableDocuments.length > 0) {
+                const docSectionHeight = availableDocuments.length * 6 + 10;
+                pdf.setFillColor(249, 249, 249);
+                pdf.rect(15, yPosition - 5, 180, docSectionHeight, 'F');
+                pdf.setLineWidth(0.3);
+                pdf.setDrawColor(220, 220, 220);
+                pdf.rect(15, yPosition - 5, 180, docSectionHeight, 'S');
+                
+                availableDocuments.forEach(([label, value], index) => {
+                    const yPos = yPosition + 2 + (index * 6);
+                    pdf.setFont(undefined, 'bold');
+                    pdf.setFontSize(9);
+                    pdf.text(label, 20, yPos);
+                    pdf.setFont(undefined, 'normal');
+                    pdf.text(value, 75, yPos);
+                });
+                
+                yPosition += docSectionHeight + 10;
+            } else {
+                // No documents available
+                pdf.setFillColor(249, 249, 249);
+                pdf.rect(15, yPosition - 5, 180, 12, 'F');
+                pdf.setLineWidth(0.3);
+                pdf.setDrawColor(220, 220, 220);
+                pdf.rect(15, yPosition - 5, 180, 12, 'S');
+                
+                pdf.setFontSize(9);
+                pdf.text('No documents uploaded', 20, yPosition + 2);
+                yPosition += 17;
+            }
+            
+            // Add documents on separate pages if they exist
+            // Collect all available documents based on user type
+            const documents = [];
+            if (userInfo.idProofUrl && userInfo.idProofUrl.trim() !== '') {
+                documents.push({ url: userInfo.idProofUrl, title: 'ID Proof' });
+            }
+            
+            // Donor documents
+            if (userInfo.userType === 'donor') {
+                if (userInfo.medicalFitnessCertificateUrl && userInfo.medicalFitnessCertificateUrl.trim() !== '') {
+                    documents.push({ url: userInfo.medicalFitnessCertificateUrl, title: 'Medical Fitness Certificate' });
+                }
+                if (userInfo.labReportsUrl && userInfo.labReportsUrl.trim() !== '') {
+                    documents.push({ url: userInfo.labReportsUrl, title: 'Lab Reports' });
+                }
+            }
+            
+            // Recipient documents
+            if (userInfo.userType === 'recipient') {
+                if (userInfo.fitnessCertificateUrl && userInfo.fitnessCertificateUrl.trim() !== '') {
+                    documents.push({ url: userInfo.fitnessCertificateUrl, title: 'Fitness Certificate' });
+                }
+                if (userInfo.medicalReportUrl && userInfo.medicalReportUrl.trim() !== '') {
+                    documents.push({ url: userInfo.medicalReportUrl, title: 'Medical Report' });
+                }
+            }
+            
+            // Add all documents to a single page
+            if (documents.length > 0) {
+                await addAllDocumentsToPDF(pdf, documents);
+            }
+            
+            // Professional footer
+            const pageCount = pdf.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                pdf.setPage(i);
+                
+                // Footer background
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                pdf.setFillColor(245, 245, 245);
+                pdf.rect(0, pageHeight - 20, 210, 20, 'F');
+                
+                // Footer content
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                pdf.setFontSize(8);
+                pdf.setTextColor(100, 100, 100);
+                pdf.text(`Page ${i} of ${pageCount}`, pageWidth - 25, pageHeight - 12);
+                pdf.text('Life Connect Registry - User Details Report', 105, pageHeight - 12, { align: 'center' });
+                pdf.text('Confidential | For Internal Use Only', 105, pageHeight - 5, { align: 'center' });
+            }
+            
+            // Save the PDF
+            pdf.save(`user-details-${userInfo.userId}-${Date.now()}.pdf`);
+        }
+        
+        // Add all documents to a single page
+        async function addAllDocumentsToPDF(pdf, documents) {
+            try {
+                pdf.addPage();
+                pdf.setFontSize(16);
+                pdf.text('Uploaded Documents', 105, 20, { align: 'center' });
+                
+                let yPosition = 40;
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const margin = 10;
+                const maxWidth = (pageWidth - (margin * 2)) / 2; // Split page into 2 columns
+                const maxHeight = (pageHeight - yPosition - 20) / 2; // 2 rows
+                
+                // Create a 2x2 grid layout
+                const positions = [
+                    { x: margin, y: yPosition },
+                    { x: pageWidth / 2, y: yPosition },
+                    { x: margin, y: yPosition + maxHeight },
+                    { x: pageWidth / 2, y: yPosition + maxHeight }
+                ];
+                
+                // Load all documents first
+                const loadedImages = [];
+                for (let i = 0; i < documents.length; i++) {
+                    const doc = documents[i];
+                    
+                    try {
+                        const img = await loadImage(doc.url, doc.title);
+                        loadedImages.push({ ...doc, img, position: positions[i] });
+                    } catch (error) {
+                        // Create placeholder for failed documents
+                        loadedImages.push({ 
+                            ...doc, 
+                            img: null, 
+                            error: error.message,
+                            position: positions[i] 
+                        });
+                    }
+                }
+                
+                // Add loaded images to PDF
+                loadedImages.forEach((doc, index) => {
+                    const pos = doc.position;
+                    
+                    // Add document title
+                    pdf.setFontSize(10);
+                    pdf.text(doc.title, pos.x + (maxWidth / 2), pos.y - 5, { align: 'center' });
+                    
+                    if (doc.img) {
+                        // Calculate dimensions to fit the allocated space
+                        let width = doc.img.width;
+                        let height = doc.img.height;
+                        
+                        // Scale to fit within the allocated space
+                        if (width > maxWidth) {
+                            height = (maxWidth / width) * height;
+                            width = maxWidth;
+                        }
+                        
+                        if (height > maxHeight) {
+                            width = (maxHeight / height) * width;
+                            height = maxHeight;
+                        }
+                        
+                        // Center the image in the allocated space
+                        const x = pos.x + (maxWidth - width) / 2;
+                        const y = pos.y + (maxHeight - height) / 2;
+                        
+                        pdf.addImage(doc.img, 'JPEG', x, y, width, height);
+                        
+                        // Add document info
+                        pdf.setFontSize(8);
+                        pdf.text(`${doc.img.width}x${doc.img.height}px`, pos.x + (maxWidth / 2), pos.y + maxHeight - 2, { align: 'center' });
+                    } else {
+                        // Add error placeholder
+                        pdf.setFontSize(8);
+                        pdf.text('Failed to load', pos.x + (maxWidth / 2), pos.y + (maxHeight / 2), { align: 'center' });
+                        pdf.text(doc.error || 'Unknown error', pos.x + (maxWidth / 2), pos.y + (maxHeight / 2) + 5, { align: 'center' });
+                    }
+                });
+                
+            } catch (error) {
+                pdf.setFontSize(12);
+                pdf.text('Error adding documents to PDF', 105, 150, { align: 'center' });
+                pdf.text('Error: ' + error.message, 105, 160, { align: 'center' });
+            }
+        }
+        
+        // Helper function to load an image
+        function loadImage(url, title) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                
+                const timeout = setTimeout(() => {
+                    reject(new Error('Loading timeout'));
+                }, 15000); // 15 second timeout
+                
+                img.onload = function() {
+                    clearTimeout(timeout);
+                    resolve(img);
+                };
+                
+                img.onerror = function(error) {
+                    clearTimeout(timeout);
+                    reject(new Error('Failed to load image: ' + error));
+                };
+                
+                img.src = url;
+            });
+        }
+        async function addDocumentToPDF(pdf, documentUrl, documentTitle) {
+            try {
+                pdf.addPage();
+                pdf.setFontSize(16);
+                pdf.text(documentTitle, 105, 20, { align: 'center' });
+                
+                // Add loading indicator
+                pdf.setFontSize(12);
+                pdf.text('Loading document...', 105, 40, { align: 'center' });
+                
+                // Create an image element to load the document
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                
+                return new Promise((resolve, reject) => {
+                    // Set timeout for document loading
+                    const timeout = setTimeout(() => {
+                        pdf.setFontSize(12);
+                        pdf.text('Document loading timeout', 105, 60, { align: 'center' });
+                        pdf.text('Document URL: ' + documentUrl, 105, 70, { align: 'center' });
+                        resolve();
+                    }, 10000); // 10 second timeout
+                    
+                    img.onload = function() {
+                        clearTimeout(timeout);
+                        try {
+                            // Clear the loading text
+                            pdf.addPage();
+                            pdf.setFontSize(16);
+                            pdf.text(documentTitle, 105, 20, { align: 'center' });
+                            
+                            // Calculate dimensions to fit the page
+                            const pageWidth = pdf.internal.pageSize.getWidth();
+                            const pageHeight = pdf.internal.pageSize.getHeight();
+                            const margin = 15; // Reduced margin for more space
+                            
+                            const maxWidth = pageWidth - (margin * 2);
+                            const maxHeight = pageHeight - (margin * 2);
+                            
+                            let width = img.width;
+                            let height = img.height;
+                            
+                            // Scale image to fit within page boundaries
+                            if (width > maxWidth) {
+                                height = (maxWidth / width) * height;
+                                width = maxWidth;
+                            }
+                            
+                            if (height > maxHeight) {
+                                width = (maxHeight / height) * width;
+                                height = maxHeight;
+                            }
+                            
+                            // Center the image
+                            const x = (pageWidth - width) / 2;
+                            const y = (pageHeight - height) / 2;
+                            
+                            // Add the image
+                            pdf.addImage(img, 'JPEG', x, y, width, height);
+                            
+                            // Add document info at bottom
+                            pdf.setFontSize(10);
+                            pdf.text(`Document: ${documentTitle}`, 105, pageHeight - 10, { align: 'center' });
+                            pdf.text(`Size: ${img.width}x${img.height}px`, 105, pageHeight - 5, { align: 'center' });
+                            
+                            resolve();
+                        } catch (error) {
+                            pdf.setFontSize(12);
+                            pdf.text('Error loading document image', 105, 60, { align: 'center' });
+                            pdf.text('Error: ' + error.message, 105, 70, { align: 'center' });
+                            pdf.text('Document URL: ' + documentUrl, 105, 80, { align: 'center' });
+                            resolve();
+                        }
+                    };
+                    
+                    img.onerror = function(error) {
+                        clearTimeout(timeout);
+                        pdf.setFontSize(12);
+                        pdf.text('Error loading document image', 105, 60, { align: 'center' });
+                        pdf.text('Possible reasons:', 105, 70, { align: 'center' });
+                        pdf.text('- Document not found', 105, 80, { align: 'center' });
+                        pdf.text('- Network error', 105, 90, { align: 'center' });
+                        pdf.text('- Document format not supported', 105, 100, { align: 'center' });
+                        pdf.text('Document URL: ' + documentUrl, 105, 110, { align: 'center' });
+                        resolve();
+                    };
+                    
+                    // Start loading the image
+                    img.src = documentUrl;
+                });
+            } catch (error) {
+                pdf.setFontSize(12);
+                pdf.text('Error processing document', 105, 60, { align: 'center' });
+                pdf.text('Error: ' + error.message, 105, 70, { align: 'center' });
+                pdf.text('Document URL: ' + documentUrl, 105, 80, { align: 'center' });
+            }
+        }
+        
+        // View document details
+        function viewDetails(documentId) {
+            // Implementation for viewing document details
+        }
+
+        // Verify document
+        function verifyDocument(documentId) {
+            if (confirm('Are you sure you want to verify this document?')) {
+                fetch(`/admin/verify-document/${documentId}/`, {
+
+                    method: 'POST',
+
+                    headers: {
+
+                        'X-CSRFToken': getCookie('csrftoken'),
+
+                        'Content-Type': 'application/json',
+
+                    },
+
+                    body: JSON.stringify({document_id: documentId})
+
+                })
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    if (data.success) {
+
+                        location.reload();
+
+                    } else {
+
+                        alert('Error verifying document: ' + data.error);
+
+                    }
+                    
+                })
+                
+                .catch(error => {
+                    
+                    alert('Error verifying document');
+                    
+                });
+            
+            }
+        
+        }
+        
+
+
+        // Delete document
+
+        function deleteDocument(documentId) {
+
+            if (confirm('Are you sure you want to delete this document? This action cannot be undone.')) {
+
+                fetch(`/admin/delete-document/${documentId}/`, {
+
+                    method: 'POST',
+
+                    headers: {
+
+                        'X-CSRFToken': getCookie('csrftoken'),
+
+                        'Content-Type': 'application/json',
+
+                    },
+
+                    body: JSON.stringify({document_id: documentId})
+
+                })
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    if (data.success) {
+
+                        location.reload();
+
+                    } else {
+
+                        alert('Error deleting document: ' + data.error);
+
+                    }
+
+                })
+
+                .catch(error => {
+
+                    alert('Error deleting document');
+                    
+                });
+
+            }
+
+        }
+
+
+
+        // Get CSRF token
+
+        function getCookie(name) {
+
+            let cookieValue = null;
+
+            if (document.cookie && document.cookie !== '') {
+
+                const cookies = document.cookie.split(';');
+
+                for (let i = 0; i < cookies.length; i++) {
+
+                    const cookie = cookies[i].trim();
+
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+
+                        break;
+
+                    }
+
+                }
+
+            }
+
+            return cookieValue;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+

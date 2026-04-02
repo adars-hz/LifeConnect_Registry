@@ -1,0 +1,28 @@
+{% for user in pending_users %}
+<div class="verification-item">
+    <div class="verification-header">
+        <div class="user-info">
+            <strong>{{ user.get_full_name|default:user.username }}</strong>
+            <span class="user-type {{ user.user_type }}-badge">{{ user.get_user_type_display }}</span>
+        </div>
+        <div class="verification-time">
+            <small>{{ user.created_at|date:"M d, Y H:i" }}</small>
+        </div>
+    </div>
+    <div class="verification-actions">
+        <button class="btn btn-small btn-success" onclick="approveUser('{{ user.id }}')">
+            <i class="fas fa-check"></i> Approve
+        </button>
+        <button class="btn btn-small btn-danger" onclick="rejectUser('{{ user.id }}')">
+            <i class="fas fa-times"></i> Reject
+        </button>
+        <button class="btn btn-small btn-info" onclick="sendEmail('{{ user.email }}')">
+            <i class="fas fa-envelope"></i> Email
+        </button>
+    </div>
+</div>
+{% empty %}
+<div class="no-pending">
+    <i class="fas fa-check-circle"></i>
+    <p>No pending verifications at this time.</p>
+</div>

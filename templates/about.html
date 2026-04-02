@@ -1,0 +1,580 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About Organ Donation - Life Connect Registry</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <div class="nav-logo">
+
+                <i class="fas fa-heartbeat"></i>
+
+                <span>Life Connect Registry</span>
+
+            </div>
+
+            <ul class="nav-menu">
+
+                <li><a href="{% url 'main:home' %}">Home</a></li>
+
+                <li><a href="{% url 'main:about' %}">About</a></li>
+
+                <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+                {% if user.is_authenticated %}
+
+                    <li><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
+
+                    <li><a href="{% url 'main:logout' %}">Logout</a></li>
+
+                {% else %}
+
+                    <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+                {% endif %}
+
+            </ul>
+
+            <div class="hamburger">
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Page Header -->
+
+    <section class="page-header">
+
+        <div class="container">
+
+            <h1>About Organ Donation</h1>
+
+            <p>Understanding the life-saving impact of organ donation and transplantation</p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- What is Organ Donation -->
+
+    <section class="content-section">
+
+        <div class="container">
+
+            <div class="content-grid">
+
+                <div class="content-main">
+
+                    <h2>What is Organ Donation?</h2>
+
+                    <p>Organ donation is the process of giving an organ or tissue to help someone who needs a transplant. Organs that can be donated include heart, kidneys, liver, lungs, pancreas, and intestines. Tissues that can be donated include corneas, skin, bone, heart valves, and blood vessels.</p>
+
+                    
+
+                    <h3>Types of Donation</h3>
+
+                    <div class="donation-types">
+
+                        <div class="donation-type">
+
+                            <i class="fas fa-user"></i>
+
+                            <h4>Living Donation</h4>
+
+                            <p>When a living person donates an organ (like a kidney or part of liver) to someone in need.</p>
+
+                        </div>
+
+                        <div class="donation-type">
+
+                            <i class="fas fa-angel"></i>
+
+                            <h4>Deceased Donation</h4>
+
+                            <p>When organs are donated from someone who has died, as indicated by their decision or family consent.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="content-sidebar">
+
+                    <div class="info-card">
+
+                        <i class="fas fa-info-circle"></i>
+
+                        <h3>Did You Know?</h3>
+
+                        <p>One organ donor can save up to 8 lives and enhance the lives of many more through tissue donation.</p>
+
+                    </div>
+
+                    <div class="info-card">
+
+                        <i class="fas fa-clock"></i>
+
+                        <h3>Time Critical</h3>
+
+                        <p>Every 10 minutes, someone is added to the national transplant waiting list.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Donor vs Recipient -->
+
+    <section class="comparison-section">
+
+        <div class="container">
+
+            <h2>Donor vs Recipient</h2>
+
+            <div class="comparison-grid">
+
+                <div class="comparison-card donor">
+
+                    <div class="comparison-header">
+
+                        <i class="fas fa-hand-holding-heart"></i>
+
+                        <h3>Donor</h3>
+
+                    </div>
+
+                    <ul class="comparison-list">
+
+                        <li><i class="fas fa-check"></i> Must be 18+ years old</li>
+
+                        <li><i class="fas fa-check"></i> Good physical and mental health</li>
+
+                        <li><i class="fas fa-check"></i> Free from chronic diseases</li>
+
+                        <li><i class="fas fa-check"></i> Willing to save lives</li>
+
+                        <li><i class="fas fa-check"></i> Medical fitness certificate required</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="comparison-card recipient">
+
+                    <div class="comparison-header">
+
+                        <i class="fas fa-heart"></i>
+
+                        <h3>Recipient</h3>
+
+                    </div>
+
+                    <ul class="comparison-list">
+
+                        <li><i class="fas fa-check"></i> Organ failure diagnosis</li>
+
+                        <li><i class="fas fa-check"></i> Medical evaluation required</li>
+
+                        <li><i class="fas fa-check"></i> Blood type compatibility</li>
+
+                        <li><i class="fas fa-check"></i> Tissue matching needed</li>
+
+                        <li><i class="fas fa-check"></i> Regular follow-up care</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Myths vs Facts -->
+
+    <section class="myths-section">
+
+        <div class="container">
+
+            <h2>Myths vs Facts</h2>
+
+            <div class="myths-grid">
+
+                <div class="myth-card">
+
+                    <div class="myth">
+
+                        <h3><i class="fas fa-times-circle"></i> Myth</h3>
+
+                        <p> Doctors won't try to save my life if they know I'm an organ donor.</p>
+
+                    </div>
+
+                    <div class="fact">
+
+                        <h3><i class="fas fa-check-circle"></i> Fact</h3>
+
+                        <p> Medical professionals are dedicated to saving every patient's life, regardless of donor status.</p>
+
+                    </div>
+
+                </div>
+
+                <div class="myth-card">
+
+                    <div class="myth">
+
+                        <h3><i class="fas fa-times-circle"></i> Myth</h3>
+
+                        <p> I'm too old to be an organ donor.</p>
+
+                    </div>
+
+                    <div class="fact">
+
+                        <h3><i class="fas fa-check-circle"></i> Fact</h3>
+
+                        <p> People of all ages can be organ donors. Medical evaluation determines eligibility.</p>
+
+                    </div>
+
+                </div>
+
+                <div class="myth-card">
+
+                    <div class="myth">
+
+                        <h3><i class="fas fa-times-circle"></i> Myth</h3>
+
+                        <p> My religion doesn't allow organ donation.</p>
+
+                    </div>
+
+                    <div class="fact">
+
+                        <h3><i class="fas fa-check-circle"></i> Fact</h3>
+
+                        <p> Most major religions support organ donation as an act of charity and saving life.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Eligibility Criteria -->
+
+    <section class="eligibility-section">
+
+        <div class="container">
+
+            <h2>Eligibility Criteria</h2>
+
+            <div class="eligibility-content">
+
+                <div class="eligibility-list">
+
+                    <h3>Basic Requirements</h3>
+
+                    <ul>
+
+                        <li><i class="fas fa-user-check"></i> Age 18 years or older</li>
+
+                        <li><i class="fas fa-heartbeat"></i> Good general health</li>
+
+                        <li><i class="fas fa-notes-medical"></i> No active cancer or HIV</li>
+
+                        <li><i class="fas fa-shield-alt"></i> No chronic diseases affecting organs</li>
+
+                        <li><i class="fas fa-brain"></i> Sound mental health</li>
+
+                        <li><i class="fas fa-file-medical"></i> Medical fitness certificate</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="eligibility-info">
+
+                    <div class="info-box">
+
+                        <h3><i class="fas fa-info"></i> Medical Evaluation</h3>
+
+                        <p>All potential donors undergo thorough medical evaluation to ensure safety for both donor and recipient.</p>
+
+                    </div>
+
+                    <div class="info-box">
+
+                        <h3><i class="fas fa-user-shield"></i> Confidential Process</h3>
+
+                        <p>All medical information is kept confidential and used only for donation purposes.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Legal Information -->
+
+    <section class="legal-section">
+
+        <div class="container">
+
+            <h2>Legal & Safety Information</h2>
+
+            <div class="legal-grid">
+
+                <div class="legal-card">
+
+                    <i class="fas fa-gavel"></i>
+
+                    <h3>Legal Framework</h3>
+
+                    <p>Organ donation is regulated by national and international laws to ensure ethical practices and protect both donors and recipients.</p>
+
+                </div>
+
+                <div class="legal-card">
+
+                    <i class="fas fa-shield-virus"></i>
+
+                    <h3>Safety Measures</h3>
+
+                    <p>Strict medical protocols ensure donor safety throughout the donation process with minimal risks.</p>
+
+                </div>
+
+                <div class="legal-card">
+
+                    <i class="fas fa-file-contract"></i>
+
+                    <h3>Informed Consent</h3>
+
+                    <p>Donors must provide informed consent, understanding all aspects of the donation process.</p>
+
+                </div>
+
+                <div class="legal-card">
+
+                    <i class="fas fa-user-secret"></i>
+
+                    <h3>Privacy Protection</h3>
+
+                    <p>All donor information is protected by privacy laws and shared only with authorized medical personnel.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CTA Section -->
+
+    <section class="cta">
+
+        <div class="container">
+
+            <h2>Ready to Save a Life?</h2>
+
+            <p>Join our community of heroes and make a difference today</p>
+
+            <div class="cta-buttons">
+
+                {% if user.is_authenticated %}
+
+                    <a href="{% url 'main:dashboard' %}" class="btn btn-primary btn-large">Go to Dashboard</a>
+
+                    <!-- <a href="{% url 'main:logout' %}" class="btn btn-secondary">Logout</a> -->
+
+                {% else %}
+
+                    <a href="{% url 'main:register' %}" class="btn btn-primary btn-large">Sign Up to Get Started</a>
+
+                    <a href="{% url 'main:user_login' %}" class="btn btn-secondary">Login</a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-content">
+
+                <div class="footer-section">
+
+                    <div class="footer-logo">
+
+                        <i class="fas fa-heartbeat"></i>
+
+                        <span>Life Connect Registry</span>
+
+                    </div>
+
+                    <p>Saving lives through organ donation and transplantation services</p>
+
+                    <div class="social-links">
+
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+
+                    </div>
+
+                </div>
+
+                <div class="footer-section">
+
+                    <h3>Quick Links</h3>
+
+                    <ul>
+
+                        <li><a href="{% url 'main:home' %}">Home</a></li>
+
+                        <li><a href="{% url 'main:about' %}">About Us</a></li>
+
+                        {% if user.is_authenticated %}
+
+                            <li><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
+
+                            <li><a href="{% url 'main:logout' %}">Logout</a></li>
+
+                        {% else %}
+
+                            <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+                        {% endif %}
+
+                        <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+                    </ul>
+
+                </div>
+
+                <!-- <div class="footer-section">
+
+            <h3>Services</h3>
+
+            <ul>
+
+              <li><a href="#">Verification Status</a></li>
+
+              <li><a href="#">Hospital Network</a></li>
+
+              <li><a href="#">Medical Support</a></li>
+
+              <li><a href="#">Emergency Contact</a></li>
+
+            </ul>
+
+          </div> -->
+
+                <div class="footer-section">
+
+                    <h3>Contact Info</h3>
+
+                    <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+
+                    <p><i class="fas fa-envelope"></i> info@lifeconnect.org</p>
+
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical City</p>
+
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</p>
+
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>&copy; 2026 Life Connect Registry. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+</body>
+
+</html>
+

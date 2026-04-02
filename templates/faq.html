@@ -1,0 +1,1022 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FAQ - Life Connect Registry</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <div class="nav-logo">
+
+                <i class="fas fa-heartbeat"></i>
+
+                <span>Life Connect Registry</span>
+
+            </div>
+
+            <ul class="nav-menu">
+
+                <li><a href="{% url 'main:home' %}">Home</a></li>
+
+                <li><a href="{% url 'main:about' %}">About</a></li>
+
+                <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+                {% if user.is_authenticated %}
+
+                    <li><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
+
+                    <li><a href="{% url 'main:logout' %}">Logout</a></li>
+
+                {% else %}
+
+                    <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+                {% endif %}
+
+            </ul>
+
+            <div class="hamburger">
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Page Header -->
+
+    <section class="page-header">
+
+        <div class="container">
+
+            <h1>Frequently Asked Questions</h1>
+
+            <p>Find answers to common questions about organ donation and our services</p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FAQ Section -->
+
+    <section class="faq-section">
+
+        <div class="container">
+
+            <!-- Search Bar -->
+
+            <div class="faq-search">
+
+                <div class="search-container">
+
+                    <i class="fas fa-search"></i>
+
+                    <input type="text" id="faq-search" placeholder="Search FAQs..." onkeyup="searchFAQs()">
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FAQ Categories -->
+
+            <div class="faq-categories">
+
+                <button class="category-btn active" onclick="filterCategory('all')">All Categories</button>
+
+                <button class="category-btn" onclick="filterCategory('registration')">Registration</button>
+
+                <button class="category-btn" onclick="filterCategory('donation')">Donation Process</button>
+
+                <button class="category-btn" onclick="filterCategory('general')">General</button>
+
+                <button class="category-btn" onclick="filterCategory('medical')">Medical</button>
+
+                <button class="category-btn" onclick="filterCategory('legal')">Legal</button>
+
+            </div>
+
+
+
+            <!-- FAQ Accordion -->
+
+            <div class="faq-accordion">
+
+                <!-- General Questions -->
+
+                <div class="faq-item" data-category="general">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>What is organ donation?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>Organ donation is the process of giving an organ or tissue to help someone who needs a transplant. This can be done while living (living donation) or after death (deceased donation). Organs that can be donated include heart, kidneys, liver, lungs, pancreas, and intestines. Tissues include corneas, skin, bone, heart valves, and blood vessels.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="general">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>Who can become an organ donor?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>Anyone can register to be an organ donor, regardless of age or medical history. However, the ability to donate depends on medical conditions at the time of donation. Generally, donors should be:</p>
+
+                        <ul>
+
+                            <li>18 years of age or older</li>
+
+                            <li>In good general health</li>
+
+                            <li>Free from chronic diseases that could affect organ quality</li>
+
+                            <li>Willing to donate voluntarily</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="general">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>How many lives can one organ donor save?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>One organ donor can save up to 8 lives through organ donation and enhance the lives of many more through tissue donation. Here's the breakdown:</p>
+
+                        <ul>
+
+                            <li>Heart: 1 life</li>
+
+                            <li>Kidneys: 2 lives</li>
+
+                            <li>Liver: 1 life</li>
+
+                            <li>Lungs: 2 lives</li>
+
+                            <li>Pancreas: 1 life</li>
+
+                            <li>Intestines: 1 life</li>
+
+                            <li>Plus tissues that can help many more people</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Registration Questions -->
+
+                <div class="faq-item" data-category="registration">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>How do I register as an organ donor?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>Registering as an organ donor is simple:</p>
+
+                        <ol>
+
+                            <li>Visit our registration page and fill out the online form</li>
+
+                            <li>Provide your personal information and medical details</li>
+
+                            <li>Upload required documents (ID proof, medical certificate)</li>
+
+                            <li>Submit the form and wait for verification</li>
+
+                            <li>Receive your unique registration ID</li>
+
+                            <li>Get approved and join our donor registry</li>
+
+                        </ol>
+
+                        <p>The entire process typically takes 3-5 business days for verification.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="registration">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>What documents are required for registration?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>To register as an organ donor, you'll need:</p>
+
+                        <ul>
+
+                            <li><strong>Government ID Proof:</strong> Passport, Driver's License, or National ID</li>
+
+                            <li><strong>Medical Fitness Certificate:</strong> From a registered medical practitioner</li>
+
+                            <li><strong>Recent Photograph:</strong> Passport size photo</li>
+
+                            <li><strong>Address Proof:</strong> Utility bill or government correspondence</li>
+
+                            <li><strong>Age Proof:</strong> Birth certificate or similar document</li>
+
+                        </ul>
+
+                        <p>All documents should be clear, valid, and uploaded in PDF, JPG, or PNG format.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="registration">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>What is a Registration ID and why is it important?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>A Registration ID is a unique identifier assigned to each registered donor or recipient. It follows the format:</p>
+
+                        <ul>
+
+                            <li><strong>Donors:</strong> OD-DON-XXXXXXXXX</li>
+
+                            <li><strong>Recipients:</strong> OD-REC-XXXXXXXXX</li>
+
+                        </ul>
+
+                        <p>This ID is important because:</p>
+
+                        <ul>
+
+                            <li>It's used for login and account access</li>
+
+                            <li>Helps track your application status</li>
+
+                            <li>Required for all future communications</li>
+
+                            <li>Ensures privacy and security of your information</li>
+
+                        </ul>
+
+                        <p>Please save your Registration ID in a safe place for future reference.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Donation Process Questions -->
+
+                <div class="faq-item" data-category="donation">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>What is the organ donation process?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>The organ donation process involves these steps:</p>
+
+                        <ol>
+
+                            <li><strong>Registration:</strong> Sign up and provide required information</li>
+
+                            <li><strong>Verification:</strong> Our team reviews your application and documents</li>
+
+                            <li><strong>Medical Evaluation:</strong> Comprehensive medical assessment</li>
+
+                            <li><strong>Matching:</strong> Get matched with compatible recipients</li>
+
+                            <li><strong>Approval:</strong> Final approval from medical board</li>
+
+                            <li><strong>Donation:</strong> The actual donation procedure</li>
+
+                        </ol>
+
+                        <p>Each step is carefully monitored to ensure safety and compliance.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="donation">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>How long does the verification process take?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>The verification process typically takes:</p>
+
+                        <ul>
+
+                            <li><strong>Document Verification:</strong> 1-2 business days</li>
+
+                            <li><strong>Medical Review:</strong> 2-3 business days</li>
+
+                            <li><strong>Final Approval:</strong> 1 business day</li>
+
+                        </ul>
+
+                        <p><strong>Total Time:</strong> 3-5 business days in most cases</p>
+
+                        <p>However, this may vary depending on:</p>
+
+                        <ul>
+
+                            <li>Completeness of submitted documents</li>
+
+                            <li>Volume of applications</li>
+
+                            <li>Additional medical information required</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="donation">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>Can I change my mind after registering?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>Yes, you can change your mind at any time before the donation process begins. Organ donation is completely voluntary. If you decide not to proceed:</p>
+
+                        <ul>
+
+                            <li>Contact us immediately with your Registration ID</li>
+
+                            <li>We will remove your information from the active registry</li>
+
+                            <li>Your documents will be securely deleted</li>
+
+                            <li>No questions will be asked</li>
+
+                        </ul>
+
+                        <p>However, once the donation process has started, it may not be possible to reverse the decision.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Medical Questions -->
+
+                <div class="faq-item" data-category="medical">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>Is organ donation safe for living donors?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>Yes, living organ donation is generally safe when performed by experienced medical teams. Here's what you should know:</p>
+
+                        <ul>
+
+                            <li><strong>Comprehensive Screening:</strong> Donors undergo thorough medical evaluation</li>
+
+                            <li><strong>Expert Surgeons:</strong> Procedures are done by specialized transplant teams</li>
+
+                            <li><strong>Modern Techniques:</strong> Minimally invasive methods are used when possible</li>
+
+                            <li><strong>Recovery:</strong> Most donors recover fully within 4-6 weeks</li>
+
+                            <li><strong>Long-term Health:</strong> Living donors can lead normal, healthy lives</li>
+
+                        </ul>
+
+                        <p>However, like any surgery, there are risks involved. These will be thoroughly explained during the evaluation process.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="medical">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>What medical conditions prevent organ donation?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>Certain medical conditions may prevent organ donation:</p>
+
+                        <ul>
+
+                            <li><strong>Active Cancer:</strong> Recent or ongoing cancer treatment</li>
+
+                            <li><strong>HIV/AIDS:</strong> Active infection</li>
+
+                            <li><strong>Severe Heart Disease:</strong> Uncontrolled cardiovascular conditions</li>
+
+                            <li><strong>Kidney Disease:</strong> Chronic kidney failure</li>
+
+                            <li><strong>Liver Disease:</strong> Advanced cirrhosis or hepatitis</li>
+
+                            <li><strong>Infectious Diseases:</strong> Active tuberculosis, etc.</li>
+
+                        </ul>
+
+                        <p>However, each case is evaluated individually. Some conditions may only affect specific organs while others remain suitable for donation.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="medical">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>Will organ donation affect my family?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>Organ donation should not negatively affect your family:</p>
+
+                        <ul>
+
+                            <li><strong>Family Support:</strong> We encourage family discussion and support</li>
+
+                            <li><strong>Medical Care:</strong> Comprehensive medical care is provided</li>
+
+                            <li><strong>Recovery:</strong> Full recovery support and follow-up care</li>
+
+                            <li><strong>Financial:</strong> All medical expenses related to donation are covered</li>
+
+                            <li><strong>Counseling:</strong> Psychological support is available</li>
+
+                        </ul>
+
+                        <p>Many families find the experience rewarding and feel proud of their loved one's decision to save lives.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Legal Questions -->
+
+                <div class="faq-item" data-category="legal">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>Is organ donation legal?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>Yes, organ donation is completely legal and regulated:</p>
+
+                        <ul>
+
+                            <li><strong>Government Approved:</strong> Regulated by health authorities</li>
+
+                            <li><strong>Ethical Guidelines:</strong> Strict ethical standards are followed</li>
+
+                            <li><strong>No Commercial Trade:</strong> Organ selling is illegal</li>
+
+                            <li><strong>Transparency:</strong> All processes are documented and transparent</li>
+
+                            <li><strong>Protection:</strong> Donor and recipient rights are protected</li>
+
+                        </ul>
+
+                        <p>Life Connect Registry operates under full legal compliance and ethical guidelines.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="legal">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>Is my information kept confidential?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>Yes, your information is strictly confidential:</p>
+
+                        <ul>
+
+                            <li><strong>Privacy Laws:</strong> We comply with all privacy protection laws</li>
+
+                            <li><strong>Secure Storage:</strong> Data is stored on secure, encrypted servers</li>
+
+                            <li><strong>Limited Access:</strong> Only authorized personnel can access your data</li>
+
+                            <li><strong>No Sharing:</strong> Information is never shared without consent</li>
+
+                            <li><strong>Anonymity:</strong> Recipient and donor identities are kept separate</li>
+
+                        </ul>
+
+                        <p>Your personal and medical information is used only for donation purposes and is protected by strict confidentiality agreements.</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="faq-item" data-category="legal">
+
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+
+                        <h3>What are my rights as an organ donor?</h3>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </div>
+
+                    <div class="faq-answer">
+
+                        <p>As an organ donor, you have these rights:</p>
+
+                        <ul>
+
+                            <li><strong>Right to Information:</strong> Complete information about the process</li>
+
+                            <li><strong>Right to Consent:</strong> Voluntary informed consent is required</li>
+
+                            <li><strong>Right to Withdraw:</strong> Can withdraw at any time before donation</li>
+
+                            <li><strong>Right to Medical Care:</strong> Free medical care and follow-up</li>
+
+                            <li><strong>Right to Privacy:</strong> Complete confidentiality of information</li>
+
+                            <li><strong>Right to Compensation:</strong> Coverage of all medical expenses</li>
+
+                            <li><strong>Right to Legal Protection:</strong> Full legal protection and rights</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Still Have Questions -->
+
+            <div class="faq-contact">
+
+                <div class="contact-card">
+
+                    <h2><i class="fas fa-question-circle"></i> Still Have Questions?</h2>
+
+                    <p>Can't find the answer you're looking for? Our team is here to help!</p>
+
+                    <div class="contact-options">
+
+                        <a href="{% url 'main:about' %}" class="btn btn-primary">
+
+                            <i class="fas fa-info-circle"></i> Learn More
+
+                        </a>
+
+                        <a href="tel:+12345678900" class="btn btn-secondary">
+
+                            <i class="fas fa-phone"></i> Call Us
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-content">
+
+                <div class="footer-section">
+
+                    <div class="footer-logo">
+
+                        <i class="fas fa-heartbeat"></i>
+
+                        <span>Life Connect Registry</span>
+
+                    </div>
+
+                    <p>Saving lives through organ donation and transplantation services</p>
+
+                    <div class="social-links">
+
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+
+                    </div>
+
+                </div>
+
+                <div class="footer-section">
+
+                    <h3>Quick Links</h3>
+
+                    <ul>
+
+                        <li><a href="{% url 'main:home' %}">Home</a></li>
+
+                        <li><a href="{% url 'main:about' %}">About Us</a></li>
+
+                        <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+                        <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+                    </ul>
+
+                </div>
+
+                <!-- <div class="footer-section">
+
+            <h3>Services</h3>
+
+            <ul>
+
+              <li><a href="#">Verification Status</a></li>
+
+              <li><a href="#">Hospital Network</a></li>
+
+              <li><a href="#">Medical Support</a></li>
+
+              <li><a href="#">Emergency Contact</a></li>
+
+            </ul>
+
+          </div> -->
+
+                <div class="footer-section">
+
+                    <h3>Contact Info</h3>
+
+                    <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+
+                    <p><i class="fas fa-envelope"></i> info@lifeconnect.org</p>
+
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical City</p>
+
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</p>
+
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>&copy; 2026 Life Connect Registry. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <script>
+
+        // Toggle FAQ accordion
+
+        function toggleFAQ(element) {
+
+            const faqItem = element.parentElement;
+
+            const answer = faqItem.querySelector('.faq-answer');
+
+            const icon = element.querySelector('i');
+
+            const allItems = document.querySelectorAll('.faq-item');
+
+            const allAnswers = document.querySelectorAll('.faq-answer');
+
+            const allIcons = document.querySelectorAll('.faq-question i');
+
+
+
+            // Close all other FAQs
+
+            allItems.forEach((item, index) => {
+
+                if (item !== faqItem) {
+
+                    allAnswers[index].style.maxHeight = null;
+
+                    allIcons[index].classList.remove('fa-chevron-up');
+
+                    allIcons[index].classList.add('fa-chevron-down');
+
+                }
+
+            });
+
+
+
+            // Toggle current FAQ
+
+            if (answer.style.maxHeight) {
+
+                answer.style.maxHeight = null;
+
+                icon.classList.remove('fa-chevron-up');
+
+                icon.classList.add('fa-chevron-down');
+
+            } else {
+
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+
+                icon.classList.remove('fa-chevron-down');
+
+                icon.classList.add('fa-chevron-up');
+
+            }
+
+        }
+
+
+
+        // Search FAQs
+
+        function searchFAQs() {
+
+            const searchTerm = document.getElementById('faq-search').value.toLowerCase();
+
+            const faqItems = document.querySelectorAll('.faq-item');
+
+
+
+            faqItems.forEach(item => {
+
+                const question = item.querySelector('h3').textContent.toLowerCase();
+
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+
+                
+
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+
+                    item.style.display = 'block';
+
+                } else {
+
+                    item.style.display = 'none';
+
+                }
+
+            });
+
+
+
+            // Show "no results" message if needed
+
+            const visibleItems = Array.from(faqItems).filter(item => item.style.display !== 'none');
+
+            const noResults = document.getElementById('no-results');
+
+            
+
+            if (visibleItems.length === 0 && searchTerm !== '') {
+
+                if (!noResults) {
+
+                    const noResultsDiv = document.createElement('div');
+
+                    noResultsDiv.id = 'no-results';
+
+                    noResultsDiv.className = 'no-results';
+
+                    noResultsDiv.innerHTML = '<p>No FAQs found matching your search. Try different keywords.</p>';
+
+                    document.querySelector('.faq-accordion').appendChild(noResultsDiv);
+
+                }
+
+            } else if (noResults) {
+
+                noResults.remove();
+
+            }
+
+        }
+
+
+
+        // Filter by category
+
+        function filterCategory(category) {
+
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            const categoryBtns = document.querySelectorAll('.category-btn');
+
+            
+
+            // Update active button
+
+            categoryBtns.forEach(btn => btn.classList.remove('active'));
+
+            event.target.classList.add('active');
+
+            
+
+            // Filter items
+
+            faqItems.forEach(item => {
+
+                if (category === 'all' || item.dataset.category === category) {
+
+                    item.style.display = 'block';
+
+                } else {
+
+                    item.style.display = 'none';
+
+                }
+
+            });
+
+            
+
+            // Clear search
+
+            document.getElementById('faq-search').value = '';
+
+            const noResults = document.getElementById('no-results');
+
+            if (noResults) {
+
+                noResults.remove();
+
+            }
+
+        }
+
+
+
+        // Initialize first FAQ as open
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // All FAQ items should start collapsed - no auto-open needed
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+

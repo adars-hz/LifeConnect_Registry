@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Registration - Life Connect Registry</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success {
+            color: green;
+            font-size: 16px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #d4edda;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Donor Registration</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="success">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" name="password1" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Confirm Password:</label>
+                <input type="password" name="password2" required>
+            </div>
+            
+            <div class="form-group">
+                <label>First Name:</label>
+                <input type="text" name="first_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Last Name:</label>
+                <input type="text" name="last_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Phone:</label>
+                <input type="text" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Blood Group:</label>
+                <select name="blood_group" required>
+                    <option value="">Select Blood Group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Date of Birth:</label>
+                <input type="date" name="date_of_birth" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Address:</label>
+                <textarea name="address" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Age:</label>
+                <input type="number" name="age" min="18" max="100" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Gender:</label>
+                <select name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Organs to Donate:</label>
+                <div>
+                    <input type="checkbox" name="organs_to_donate" value="kidney"> Kidney<br>
+                    <input type="checkbox" name="organs_to_donate" value="liver"> Liver<br>
+                    <input type="checkbox" name="organs_to_donate" value="heart"> Heart<br>
+                    <input type="checkbox" name="organs_to_donate" value="lungs"> Lungs
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Medical Fitness Status:</label>
+                <select name="medical_fitness_status" required>
+                    <option value="">Select Status</option>
+                    <option value="fit">Fit</option>
+                    <option value="needs_review">Needs Review</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Medical Fitness Certificate:</label>
+                <input type="file" name="medical_fitness_certificate" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Lab Reports / ID Proof:</label>
+                <input type="file" name="lab_reports" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Height (cm):</label>
+                <input type="number" name="height" step="0.1" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Weight (kg):</label>
+                <input type="number" name="weight" step="0.1" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Medications:</label>
+                <textarea name="medications"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="consent" required>
+                    I consent to organ donation and declare all information is true
+                </label>
+            </div>
+            
+            <button type="submit" name="donor_submit" value="Register as Donor" class="btn">
+                <i class="fas fa-user-plus"></i> Register as Donor
+            </button>
+        </form>
+    </div>
+</body>
+</html>

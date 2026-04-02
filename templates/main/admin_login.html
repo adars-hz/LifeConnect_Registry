@@ -1,0 +1,322 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login - Life Connect Registry</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <div class="nav-logo">
+
+                <i class="fas fa-heartbeat"></i>
+
+                <span>Life Connect Registry</span>
+
+            </div>
+
+            <ul class="nav-menu">
+
+                <li><a href="{% url 'main:home' %}">Home</a></li>
+
+                <li><a href="{% url 'main:about' %}">About</a></li>
+
+                <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+                {% if user.is_authenticated %}
+
+                    <li><a href="{% url 'main:admin_dashboard' %}" class="active">Admin Dashboard</a></li>
+
+                    <li><a href="{% url 'main:logout' %}">Logout</a></li>
+
+                {% else %}
+
+                    <li><a href="{% url 'main:register' %}">Register</a></li>
+
+                    <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+                {% endif %}
+
+            </ul>
+
+            <div class="hamburger">
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Admin Login Section -->
+
+    <section class="login-section">
+
+        <div class="container">
+
+            <div class="login-container">
+
+                <div class="login-header">
+
+                    <h1><i class="fas fa-user-shield"></i> Admin Login</h1>
+
+                    <p>Access the administrative dashboard</p>
+
+                </div>
+
+                
+
+                <form method="post" class="admin-login-form">
+
+                    {% csrf_token %}
+
+                    {% if messages %}
+
+                        <div class="messages">
+
+                            {% for message in messages %}
+
+                                <div class="alert alert-{{ message.tags }}">
+
+                                    {{ message }}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                    
+
+                    <div class="form-group">
+
+                        <label for="username">Username</label>
+
+                        <div class="input-group">
+
+                            <i class="fas fa-user"></i>
+
+                            <input type="text" id="username" name="username" required placeholder="Enter admin username">
+
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div class="form-group">
+
+                        <label for="password">Password</label>
+
+                        <div class="input-group">
+
+                            <i class="fas fa-lock"></i>
+
+                            <input type="password" id="password" name="password" required placeholder="Enter admin password">
+
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div class="form-actions">
+
+                        <button type="submit" class="btn btn-primary btn-large">
+
+                            <i class="fas fa-sign-in-alt"></i> Admin Login
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+                
+
+                <div class="login-footer">
+
+                    <p>
+
+                        <i class="fas fa-info-circle"></i> 
+
+                        Default credentials: admin / admin123
+
+                    </p>
+
+                    <p>
+
+                        <a href="{% url 'main:user_login' %}">Regular User Login</a> | 
+
+                        <a href="{% url 'main:home' %}">Back to Home</a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-content">
+
+                <div class="footer-section">
+
+                    <div class="footer-logo">
+
+                        <i class="fas fa-heartbeat"></i>
+
+                        <span>Life Connect Registry</span>
+
+                    </div>
+
+                    <p>Connecting donors with recipients to save lives through organ donation.</p>
+
+                    <div class="social-links">
+
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+
+                    </div>
+
+                </div>
+
+                <div class="footer-section">
+
+                    <h3>Quick Links</h3>
+
+                    <ul>
+
+                        <li><a href="{% url 'main:home' %}">Home</a></li>
+
+                        <li><a href="{% url 'main:about' %}">About Us</a></li>
+
+                        <li><a href="{% url 'main:register' %}">Register</a></li>
+
+                        <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+                        <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="footer-section">
+
+                    <h3>Services</h3>
+
+                    <ul>
+
+                        <li><a href="{% url 'main:register' %}">Donor Registration</a></li>
+
+                        <li><a href="{% url 'main:register' %}">Recipient Registration</a></li>
+
+                        <li><a href="#">Verification Status</a></li>
+
+                        <li><a href="#">Hospital Network</a></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="footer-section">
+
+                    <h3>Contact Info</h3>
+
+                    <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+
+                    <p><i class="fas fa-envelope"></i> info@lifeconnect.org</p>
+
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical City</p>
+
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</p>
+
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>&copy; 2026 Life Connect Registry. All rights reserved.</p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <script>
+
+        // Form validation
+
+        document.querySelector('.admin-login-form').addEventListener('submit', function(e) {
+
+            const username = document.getElementById('username').value;
+
+            const password = document.getElementById('password').value;
+
+            
+
+            if (!username || !password) {
+
+                e.preventDefault();
+
+                alert('Please fill in all fields');
+
+                return false;
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,4545 @@
+{% load static %}
+
+
+
+<!doctype html>
+
+
+
+<html lang="en">
+
+
+
+  <head>
+
+
+
+    <meta charset="UTF-8" />
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+
+    <title>Login - Life Connect Registry</title>
+
+
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+
+
+    <link
+
+
+
+      rel="stylesheet"
+
+
+
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+
+
+
+    />
+
+
+
+  <style>
+
+
+
+    /* Custom styles for sign up modal */
+
+
+
+    #sign-up-modal {
+
+
+
+      position: fixed;
+
+
+
+      top: 0;
+
+
+
+      left: 0;
+
+
+
+      width: 100%;
+
+
+
+      height: 100%;
+
+
+
+      background-color: rgba(0, 0, 0, 0.8);
+
+
+
+      display: none;
+
+
+
+      justify-content: center;
+
+
+
+      align-items: center;
+
+
+
+      z-index: 10000;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-content {
+
+
+
+      background: white;
+
+
+
+      border-radius: 12px;
+
+
+
+      width: 90%;
+
+
+
+      max-width: 500px;
+
+
+
+      height: auto;
+
+
+
+      max-height: 85vh;
+
+
+
+      overflow: hidden;
+
+
+
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+
+
+      animation: modalSlideIn 0.3s ease-out;
+
+
+
+      display: flex;
+
+
+
+      flex-direction: column;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-header {
+
+
+
+      background: linear-gradient(135deg, #27ae60 0%, #2980b9 100%);
+
+
+
+      color: white;
+
+
+
+      padding: 20px 30px;
+
+
+
+      border-radius: 12px 12px 0 0;
+
+
+
+      display: flex;
+
+
+
+      justify-content: space-between;
+
+
+
+      align-items: center;
+
+
+
+      position: relative;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-header h2 {
+
+
+
+      margin: 0;
+
+
+
+      font-size: 24px;
+
+
+
+      font-weight: 600;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-header i {
+
+
+
+      font-size: 28px;
+
+
+
+      margin-right: 15px;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-close {
+
+
+
+      background: transparent;
+
+
+
+      border: none;
+
+
+
+      color: #000;
+
+
+
+      font-size: 20px;
+
+
+
+      width: 40px;
+
+
+
+      height: 40px;
+
+
+
+      border-radius: 50%;
+
+
+
+      cursor: pointer;
+
+
+
+      display: flex;
+
+
+
+      align-items: center;
+
+
+
+      justify-content: center;
+
+
+
+      transition: all 0.3s ease;
+
+
+
+      font-weight: bold;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-close:hover {
+
+
+
+      background: rgba(0, 0, 0, 0.1);
+
+
+
+      transform: scale(1.1);
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .password-toggle {
+
+
+
+      position: absolute;
+
+
+
+      right: 12px;
+
+
+
+      top: 50%;
+
+
+
+      transform: translateY(-50%);
+
+
+
+      color: #666;
+
+
+
+      cursor: pointer;
+
+
+
+      font-size: 16px;
+
+
+
+      transition: color 0.3s ease;
+
+
+
+      z-index: 10;
+
+
+
+      border: none;
+
+
+
+      background: transparent;
+
+
+
+      padding: 0;
+
+
+
+      margin: 0;
+
+
+
+      pointer-events: auto;
+
+
+
+      line-height: 1;
+
+
+
+      height: auto;
+
+
+
+      width: auto;
+
+
+
+      display: flex;
+
+
+
+      align-items: center;
+
+
+
+      justify-content: center;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .password-toggle:hover {
+
+
+
+      color: #27ae60;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .password-toggle i {
+
+
+
+      line-height: 1;
+
+
+
+      display: block;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-body {
+
+
+
+      padding: 20px 30px;
+
+
+
+      flex: 1;
+
+
+
+      display: flex;
+
+
+
+      flex-direction: column;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-body p {
+
+
+
+      text-align: center;
+
+
+
+      color: #666;
+
+
+
+      margin-bottom: 20px;
+
+
+
+      font-size: 15px;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-group {
+
+
+
+      margin-bottom: 15px;
+
+
+
+      position: relative;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-group label {
+
+
+
+      display: block;
+
+
+
+      margin-bottom: 8px;
+
+
+
+      font-weight: 600;
+
+
+
+      color: #333;
+
+
+
+      font-size: 14px;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-group input {
+
+
+
+      width: 100%;
+
+
+
+      padding: 12px 50px 12px 15px;
+
+
+
+      border: 2px solid #e1e5e9;
+
+
+
+      border-radius: 8px;
+
+
+
+      font-size: 14px;
+
+
+
+      transition: all 0.3s ease;
+
+
+
+      box-sizing: border-box;
+
+
+
+      height: 48px;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-group input:focus {
+
+
+
+      outline: none;
+
+
+
+      border-color: #27ae60;
+
+
+
+      box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .password-toggle {
+
+
+
+      position: absolute;
+
+
+
+      right: 15px;
+
+
+
+      top: calc(100% - 24px);
+
+
+
+      transform: translateY(-50%);
+
+
+
+      color: #666;
+
+
+
+      cursor: pointer;
+
+
+
+      font-size: 18px;
+
+
+
+      transition: all 0.3s ease;
+
+
+
+      z-index: 15;
+
+
+
+      border: none;
+
+
+
+      background: transparent;
+
+
+
+      padding: 8px;
+
+
+
+      margin: 0;
+
+
+
+      pointer-events: auto;
+
+
+
+      display: flex;
+
+
+
+      align-items: center;
+
+
+
+      justify-content: center;
+
+
+
+      border-radius: 4px;
+
+
+
+      width: 36px;
+
+
+
+      height: 36px;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .password-toggle:hover {
+
+
+
+      color: #27ae60;
+
+
+
+      background: rgba(39, 174, 96, 0.1);
+
+
+
+      transform: translateY(-50%) scale(1.1);
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .password-toggle:active {
+
+
+
+      transform: translateY(-50%) scale(0.95);
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .password-toggle i {
+
+
+
+      line-height: 1;
+
+
+
+      display: block;
+
+
+
+      font-size: 18px;
+
+
+
+      width: 18px;
+
+
+
+      height: 18px;
+
+
+
+    }
+
+
+
+    
+
+
+
+    /* Main login form password toggles */
+
+
+
+    .login-form .form-group {
+
+
+
+      position: relative;
+
+
+
+    }
+
+
+
+    
+
+
+
+    .login-form .form-group input {
+
+
+
+      padding-right: 50px;
+
+
+
+      height: 48px;
+
+
+
+      box-sizing: border-box;
+
+
+
+    }
+
+
+
+    
+
+
+
+    .login-form .password-toggle {
+
+
+
+      position: absolute;
+
+
+
+      right: 15px;
+
+
+
+      top: calc(100% - 28px);
+
+
+
+      transform: translateY(-50%);
+
+
+
+      color: #666;
+
+
+
+      cursor: pointer;
+
+
+
+      font-size: 18px;
+
+
+
+      transition: all 0.3s ease;
+
+
+
+      z-index: 15;
+
+
+
+      border: none;
+
+
+
+      background: transparent;
+
+
+
+      padding: 8px;
+
+
+
+      margin: 0;
+
+
+
+      pointer-events: auto;
+
+
+
+      display: flex;
+
+
+
+      align-items: center;
+
+
+
+      justify-content: center;
+
+
+
+      border-radius: 4px;
+
+
+
+      width: 36px;
+
+
+
+      height: 36px;
+
+
+
+    }
+
+
+
+    
+
+
+
+    .login-form .password-toggle:hover {
+
+
+
+      color: #27ae60;
+
+
+
+      background: rgba(39, 174, 96, 0.1);
+
+
+
+      transform: translateY(-50%) scale(1.1);
+
+
+
+    }
+
+
+
+    
+
+
+
+    .login-form .password-toggle:active {
+
+
+
+      transform: translateY(-50%) scale(0.95);
+
+
+
+    }
+
+
+
+    
+
+
+
+    .login-form .password-toggle i {
+
+
+
+      line-height: 1;
+
+
+
+      display: block;
+
+
+
+      font-size: 18px;
+
+
+
+      width: 18px;
+
+
+
+      height: 18px;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-close {
+
+
+
+      background: transparent;
+
+
+
+      border: none;
+
+
+
+      color: #000 !important;
+
+
+
+      font-size: 20px;
+
+
+
+      width: 40px;
+
+
+
+      height: 40px;
+
+
+
+      border-radius: 50%;
+
+
+
+      cursor: pointer;
+
+
+
+      display: flex;
+
+
+
+      align-items: center;
+
+
+
+      justify-content: center;
+
+
+
+      transition: all 0.3s ease;
+
+
+
+      font-weight: bold;
+
+
+
+      z-index: 1000;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-close:hover {
+
+
+
+      background: rgba(0, 0, 0, 0.1);
+
+
+
+      transform: scale(1.1);
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .modal-close i {
+
+
+
+      color: #000 !important;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-actions {
+
+
+
+      display: flex;
+
+
+
+      gap: 12px;
+
+
+
+      margin-top: 15px;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-actions button {
+
+
+
+      flex: 1;
+
+
+
+      padding: 10px 16px;
+
+
+
+      border: none;
+
+
+
+      border-radius: 6px;
+
+
+
+      font-size: 14px;
+
+
+
+      font-weight: 600;
+
+
+
+      cursor: pointer;
+
+
+
+      transition: all 0.3s ease;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-actions .btn-primary {
+
+
+
+      background: linear-gradient(135deg, #27ae60 0%, #2980b9 100%);
+
+
+
+      color: white;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-actions .btn-primary:hover {
+
+
+
+      transform: translateY(-2px);
+
+
+
+      box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-actions .btn-secondary {
+
+
+
+      background: #f8f9fa;
+
+
+
+      color: #666;
+
+
+
+      border: 2px solid #e1e5e9;
+
+
+
+    }
+
+
+
+    
+
+
+
+    #sign-up-modal .form-actions .btn-secondary:hover {
+
+
+
+      background: #e9ecef;
+
+
+
+      border-color: #adb5bd;
+
+
+
+    }
+
+
+
+    
+
+
+
+    @keyframes modalSlideIn {
+
+
+
+      from {
+
+
+
+        opacity: 0;
+
+
+
+        transform: translateY(-30px) scale(0.95);
+
+
+
+      }
+
+
+
+      to {
+
+
+
+        opacity: 1;
+
+
+
+        transform: translateY(0) scale(1);
+
+
+
+      }
+
+
+
+    }
+
+
+
+    
+
+
+
+    /* Responsive design */
+
+
+
+    @media (max-width: 600px) {
+
+
+
+      #sign-up-modal .modal-content {
+
+
+
+        width: 95%;
+
+
+
+        margin: 10px;
+
+
+
+        max-height: 90vh;
+
+
+
+      }
+
+
+
+      
+
+
+
+      #sign-up-modal .modal-header {
+
+
+
+        padding: 15px 20px;
+
+
+
+      }
+
+
+
+      
+
+
+
+      #sign-up-modal .modal-header h2 {
+
+
+
+        font-size: 20px;
+
+
+
+      }
+
+
+
+      
+
+
+
+      #sign-up-modal .modal-header i {
+
+
+
+        font-size: 24px;
+
+
+
+      }
+
+
+
+      
+
+
+
+      #sign-up-modal .modal-body {
+
+
+
+        padding: 15px 20px;
+
+
+
+      }
+
+
+
+      
+
+
+
+      #sign-up-modal .form-actions {
+
+
+
+        flex-direction: column;
+
+
+
+        gap: 10px;
+
+
+
+      }
+
+
+
+      
+
+
+
+      #sign-up-modal .form-actions button {
+
+
+
+        padding: 12px 16px;
+
+
+
+      }
+
+
+
+    }
+
+
+
+  </style>
+
+
+
+</head>
+
+
+
+  <body>
+
+
+
+    <!-- Navigation -->
+
+
+
+    <nav class="navbar">
+
+
+
+      <div class="nav-container">
+
+
+
+        <div class="nav-logo">
+
+
+
+          <i class="fas fa-heartbeat"></i>
+
+
+
+          <span>Life Connect Registry</span>
+
+
+
+        </div>
+
+
+
+        <ul class="nav-menu">
+
+
+
+          <li><a href="{% url 'main:home' %}">Home</a></li>
+
+
+
+          <li><a href="{% url 'main:about' %}">About</a></li>
+
+
+
+          <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+
+
+          <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+
+
+        </ul>
+
+
+
+        <div class="hamburger">
+
+
+
+          <span></span>
+
+
+
+          <span></span>
+
+
+
+          <span></span>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </nav>
+
+
+
+
+
+
+
+    <!-- Page Header -->
+
+
+
+    <section class="page-header">
+
+
+
+      <div class="container">
+
+
+
+        <h1>Login</h1>
+
+
+
+        <p>Access your Life Connect Registry account</p>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <!-- Login Section -->
+
+
+
+    <section class="login-section">
+
+
+
+      <div class="container">
+
+
+
+        <div class="login-container">
+
+
+
+          <div class="login-tabs">
+
+
+
+            <button
+
+
+
+              class="login-tab-btn active"
+
+
+
+              onclick="switchLoginTab('user')"
+
+
+
+            >
+
+
+
+              User Login
+
+
+
+            </button>
+
+
+
+            <button class="login-tab-btn" onclick="switchLoginTab('admin')">
+
+
+
+              Admin Login
+
+
+
+            </button>
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <!-- User Login Form -->
+
+
+
+          <div id="user-login" class="login-tab-content active">
+
+
+
+            <form class="login-form" onsubmit="handleUserLogin(event)">
+
+
+
+              {% csrf_token %}
+
+
+
+              <div class="form-section">
+
+
+
+                <h2><i class="fas fa-user"></i> User Login</h2>
+
+
+
+
+
+
+
+                <div class="form-group">
+
+
+
+                  <label for="identifier">Email Address</label>
+
+
+
+                  <input
+
+
+
+                    type="email"
+
+
+
+                    id="identifier"
+
+
+
+                    name="identifier"
+
+
+
+                    placeholder="Enter your email address"
+
+
+
+                    required
+
+
+
+                  />
+
+
+
+                </div>
+
+
+
+                <small
+
+
+
+                  >Don't have an account?
+
+
+
+                  <a href="#" onclick="openSignUpModal()">Sign up here</a></small
+
+
+
+                >
+
+
+
+
+
+
+
+                <div class="form-group">
+
+
+
+                  <label for="user-password">Password *</label>
+
+
+
+                  <input
+
+
+
+                    type="password"
+
+
+
+                    id="user-password"
+
+
+
+                    name="password"
+
+
+
+                    placeholder="Enter your password"
+
+
+
+                    required
+
+
+
+                  />
+
+
+
+                  <div class="password-toggle">
+
+
+
+                    <i
+
+
+
+                      class="fas fa-eye"
+
+
+
+                      onclick="togglePassword('user-password')"
+
+
+
+                    ></i>
+
+
+
+                  </div>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="form-options">
+
+
+
+                  <label class="checkbox-label">
+
+
+
+                    <input type="checkbox" name="remember" />
+
+
+
+                    Remember me
+
+
+
+                  </label>
+
+
+
+                  <a
+
+
+
+                    href="#"
+
+
+
+                    class="forgot-password"
+
+
+
+                    onclick="showForgotPassword()"
+
+
+
+                    >Forgot Password?</a
+
+
+
+                  >
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="form-actions">
+
+
+
+                  <button type="submit" class="btn btn-primary btn-large">
+
+
+
+                    Login
+
+
+
+                  </button>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="login-footer">
+
+
+
+                  <p>
+
+
+
+                    New to Life Connect Registry?
+
+
+
+                    <a href="#" onclick="openSignUpModal()">Sign up here</a> to get started
+
+
+
+                  </p>
+
+
+
+                </div>
+
+
+
+              </div>
+
+
+
+            </form>
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <!-- Admin Login Form -->
+
+
+
+          <div id="admin-login" class="login-tab-content">
+
+
+
+            <form
+
+
+
+              class="login-form"
+
+
+
+              id="admin-login-form"
+
+
+
+              action="{% url 'main:admin_login' %}"
+
+
+
+              method="post"
+
+
+
+            >
+
+
+
+              {% csrf_token %}
+
+
+
+              <div class="form-section">
+
+
+
+                <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+
+
+
+
+
+
+
+                <div class="admin-notice">
+
+
+
+                  <i class="fas fa-info-circle"></i>
+
+
+
+                  <p>This login is for authorized administrators only.</p>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="form-group">
+
+
+
+                  <label for="admin-username">Admin Username *</label>
+
+
+
+                  <input
+
+
+
+                    type="text"
+
+
+
+                    id="admin-username"
+
+
+
+                    name="username"
+
+
+
+                    placeholder="Enter admin username"
+
+
+
+                    required
+
+
+
+                  />
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="form-group">
+
+
+
+                  <label for="admin-password">Admin Password *</label>
+
+
+
+                  <input
+
+
+
+                    type="password"
+
+
+
+                    id="admin-password"
+
+
+
+                    name="password"
+
+
+
+                    placeholder="Enter admin password"
+
+
+
+                    required
+
+
+
+                  />
+
+
+
+                  <div class="password-toggle">
+
+
+
+                    <i
+
+
+
+                      class="fas fa-eye"
+
+
+
+                      onclick="togglePassword('admin-password')"
+
+
+
+                    ></i>
+
+
+
+                  </div>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="form-options">
+
+
+
+                  <label class="checkbox-label">
+
+
+
+                    <input type="checkbox" name="remember" />
+
+
+
+                    Remember me
+
+
+
+                  </label>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="form-actions">
+
+
+
+                  <button type="submit" class="btn btn-primary btn-large">
+
+
+
+                    Admin Login
+
+
+
+                  </button>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="login-footer">
+
+
+
+                  <p>
+
+
+
+                    Need admin access?
+
+
+
+                    <a href="{% url 'main:about' %}">Learn More</a>
+
+
+
+                  </p>
+
+
+
+                </div>
+
+
+
+              </div>
+
+
+
+            </form>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <!-- Forgot Password Modal -->
+
+
+
+    <div id="forgot-password-modal" class="modal">
+
+
+
+      <div class="modal-content">
+
+
+
+        <div class="modal-header">
+
+
+
+          <i class="fas fa-key"></i>
+
+
+
+          <h2>Forgot Password</h2>
+
+
+
+        </div>
+
+
+
+        <div class="modal-body">
+
+
+
+          <p>
+
+
+
+            Enter your email address or registration ID to reset your password.
+
+
+
+          </p>
+
+
+
+          <form onsubmit="handleForgotPassword(event)">
+
+
+
+            <div class="form-group">
+
+
+
+              <label for="reset-identifier"
+
+
+
+                >Email Address or Registration ID</label
+
+
+
+              >
+
+
+
+              <input
+
+
+
+                type="text"
+
+
+
+                id="reset-identifier"
+
+
+
+                name="resetIdentifier"
+
+
+
+                placeholder="Enter email or registration ID"
+
+
+
+                required
+
+
+
+              />
+
+
+
+            </div>
+
+
+
+            <div class="form-actions">
+
+
+
+              <button type="submit" class="btn btn-primary">
+
+
+
+                Send Reset Link
+
+
+
+              </button>
+
+
+
+              <button
+
+
+
+                type="button"
+
+
+
+                class="btn btn-secondary"
+
+
+
+                onclick="closeForgotPassword()"
+
+
+
+              >
+
+
+
+                Cancel
+
+
+
+              </button>
+
+
+
+            </div>
+
+
+
+          </form>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- Sign Up Modal -->
+
+
+
+    <div id="sign-up-modal" class="modal">
+
+
+
+      <div class="modal-content">
+
+
+
+        <div class="modal-header">
+
+
+
+          <div style="display: flex; align-items: center;">
+
+
+
+            <i class="fas fa-user-plus"></i>
+
+
+
+            <h2>Sign Up</h2>
+
+
+
+          </div>
+
+
+
+          <button class="modal-close" onclick="closeSignUpModal()">
+
+
+
+            <i class="fas fa-times"></i>
+
+
+
+          </button>
+
+
+
+        </div>
+
+
+
+        <div class="modal-body">
+
+
+
+          <p>Create your Life Connect Registry account to get started</p>
+
+
+
+          <form onsubmit="handleSignUp(event)">
+
+
+
+            {% csrf_token %}
+
+
+
+            <div class="form-group">
+
+
+
+              <label for="signup-username">Username *</label>
+
+
+
+              <input
+
+
+
+                type="text"
+
+
+
+                id="signup-username"
+
+
+
+                name="username"
+
+
+
+                placeholder="Choose a username"
+
+
+
+                required
+
+
+
+              />
+
+
+
+            </div>
+
+
+
+            <div class="form-group">
+
+
+
+              <label for="signup-email">Email Address *</label>
+
+
+
+              <input
+
+
+
+                type="email"
+
+
+
+                id="signup-email"
+
+
+
+                name="email"
+
+
+
+                placeholder="Enter your email address"
+
+
+
+                required
+
+
+
+              />
+
+
+
+            </div>
+
+
+
+            <div class="form-group">
+
+
+
+              <label for="signup-password">Password *</label>
+
+
+
+              <input
+
+
+
+                type="password"
+
+
+
+                id="signup-password"
+
+
+
+                name="password"
+
+
+
+                placeholder="Create a password"
+
+
+
+                required
+
+
+
+              />
+
+
+
+              <div class="password-toggle">
+
+
+
+                <i
+
+
+
+                  class="fas fa-eye"
+
+
+
+                  onclick="togglePassword('signup-password')"
+
+
+
+                ></i>
+
+
+
+              </div>
+
+
+
+            </div>
+
+
+
+            <div class="form-group">
+
+
+
+              <label for="signup-confirm-password">Confirm Password *</label>
+
+
+
+              <input
+
+
+
+                type="password"
+
+
+
+                id="signup-confirm-password"
+
+
+
+                placeholder="Confirm your password"
+
+
+
+                required
+
+
+
+              />
+
+
+
+              <div class="password-toggle">
+
+
+
+                <i
+
+
+
+                  class="fas fa-eye"
+
+
+
+                  onclick="togglePassword('signup-confirm-password')"
+
+
+
+                ></i>
+
+
+
+              </div>
+
+
+
+            </div>
+
+
+
+            <div class="form-actions">
+
+
+
+              <button type="submit" class="btn btn-primary">
+
+
+
+                Create Account
+
+
+
+              </button>
+
+
+
+              <button
+
+
+
+                type="button"
+
+
+
+                class="btn btn-secondary"
+
+
+
+                onclick="closeSignUpModal()"
+
+
+
+              >
+
+
+
+                Cancel
+
+
+
+              </button>
+
+
+
+            </div>
+
+
+
+          </form>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- Footer -->
+
+
+
+    <footer>
+
+
+
+      <div class="container">
+
+
+
+        <div class="footer-content">
+
+
+
+          <div class="footer-section">
+
+
+
+            <div class="footer-logo">
+
+
+
+              <i class="fas fa-heartbeat"></i>
+
+
+
+              <span>Life Connect Registry</span>
+
+
+
+            </div>
+
+
+
+            <p>
+
+
+
+              Saving lives through organ donation and transplantation services
+
+
+
+            </p>
+
+
+
+            <div class="social-links">
+
+
+
+              <a href="#"><i class="fab fa-facebook"></i></a>
+
+
+
+              <a href="#"><i class="fab fa-twitter"></i></a>
+
+
+
+              <a href="#"><i class="fab fa-instagram"></i></a>
+
+
+
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+          <div class="footer-section">
+
+
+
+            <h3>Quick Links</h3>
+
+
+
+            <ul>
+
+
+
+              <li><a href="{% url 'main:home' %}">Home</a></li>
+
+
+
+              <li><a href="{% url 'main:about' %}">About</a></li>
+
+
+
+              <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+
+
+              <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+
+
+            </ul>
+
+
+
+          </div>
+
+
+
+          <!-- <div class="footer-section">
+
+
+
+            <h3>Services</h3>
+
+
+
+            <ul>
+
+
+
+              <li><a href="#">Verification Status</a></li>
+
+
+
+              <li><a href="#">Hospital Network</a></li>
+
+
+
+              <li><a href="#">Medical Support</a></li>
+
+
+
+              <li><a href="#">Emergency Contact</a></li>
+
+
+
+            </ul>
+
+
+
+          </div> -->
+
+
+
+          <div class="footer-section">
+
+
+
+            <h3>Contact Info</h3>
+
+
+
+            <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+
+
+
+            <p><i class="fas fa-envelope"></i> info@lifeconnect.org</p>
+
+
+
+            <p>
+
+
+
+              <i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical
+
+
+
+              City
+
+
+
+            </p>
+
+
+
+            <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</p>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+
+
+          <p>
+
+
+
+            &copy; 2026 Life Connect Registry. All rights reserved. |
+
+
+
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+
+
+
+          </p>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </footer>
+
+
+
+
+
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+
+
+    <script>
+
+
+
+      // Handle user login with popup alerts
+      function handleUserLogin(event) {
+        event.preventDefault();
+        
+        const identifier = document.getElementById('identifier').value.trim();
+        const password = document.getElementById('user-password').value;
+        
+        if (!identifier || !password) {
+          showLoginError('Please enter both email and password.');
+          return;
+        }
+        
+        // Create form data
+        const formData = new FormData();
+        formData.append('identifier', identifier);
+        formData.append('password', password);
+        formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+        
+        // Send AJAX request
+        fetch('{% url "main:user_login" %}', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            window.location.href = data.redirect;
+          } else {
+            showLoginError(data.message);
+          }
+        })
+        .catch(error => {
+          showLoginError('An error occurred. Please try again.');
+        });
+      }
+
+      // Show popup alert for login errors
+      function showLoginError(message) {
+        alert(message);
+      return false;
+      }
+
+      // Login tab switching
+
+
+
+      function switchLoginTab(tab) {
+
+
+
+        const userLogin = document.getElementById("user-login");
+
+
+
+        const adminLogin = document.getElementById("admin-login");
+
+
+
+        const tabBtns = document.querySelectorAll(".login-tab-btn");
+
+
+
+
+
+
+
+        tabBtns.forEach((btn) => btn.classList.remove("active"));
+
+
+
+
+
+
+
+        if (tab === "user") {
+
+
+
+          userLogin.classList.add("active");
+
+
+
+          adminLogin.classList.remove("active");
+
+
+
+          tabBtns[0].classList.add("active");
+
+
+
+        } else {
+
+
+
+          adminLogin.classList.add("active");
+
+
+
+          userLogin.classList.remove("active");
+
+
+
+          tabBtns[1].classList.add("active");
+
+
+
+        }
+
+
+
+      }
+
+
+
+
+
+
+
+      // Toggle login type (ID vs Email)
+
+
+
+      function toggleLoginType(type) {
+
+
+
+        const identifierLabel = document.getElementById("identifier-label");
+
+
+
+        const identifierInput = document.getElementById("user-identifier");
+
+
+
+        const smallText = identifierInput.nextElementSibling;
+
+
+
+
+
+
+
+        if (type === "id") {
+
+
+
+          identifierLabel.textContent = "Registration ID *";
+
+
+
+          identifierInput.placeholder =
+
+
+
+            "Enter your Registration ID (e.g., OD-DON-123456789)";
+
+
+
+          smallText.innerHTML =
+
+
+
+            'Don\'t have an ID? <a href="/register/">Register here</a>';
+
+
+
+        } else {
+
+
+
+          identifierLabel.textContent = "Email Address *";
+
+
+
+          identifierInput.placeholder = "Enter your email address";
+
+
+
+          smallText.innerHTML =
+
+
+
+            'Don\'t have an account? <a href="/register/">Register here</a>';
+
+
+
+        }
+
+
+
+      }
+
+
+
+
+
+
+
+      // Toggle password visibility
+
+
+
+      function togglePassword(fieldId) {
+
+
+
+        console.log('Toggling password for:', fieldId); // Debug log
+
+
+
+        
+
+
+
+        const passwordField = document.getElementById(fieldId);
+
+
+
+        if (!passwordField) {
+
+
+
+          console.error('Password field not found:', fieldId);
+
+
+
+          return;
+
+
+
+        }
+
+
+
+        
+
+
+
+        // Find the toggle container (next element sibling)
+
+
+
+        let toggleContainer = passwordField.nextElementSibling;
+
+
+
+        let toggleIcon = null;
+
+
+
+        
+
+
+
+        // Try to find the icon in the toggle container
+
+
+
+        if (toggleContainer && toggleContainer.classList.contains('password-toggle')) {
+
+
+
+          toggleIcon = toggleContainer.querySelector('i');
+
+
+
+        }
+
+
+
+        
+
+
+
+        // Fallback: search for the icon in nearby elements
+
+
+
+        if (!toggleIcon) {
+
+
+
+          const parentDiv = passwordField.parentElement;
+
+
+
+          toggleIcon = parentDiv.querySelector('.password-toggle i');
+
+
+
+        }
+
+
+
+        
+
+
+
+        if (!toggleIcon) {
+
+
+
+          console.error('Toggle icon not found for field:', fieldId);
+
+
+
+          return;
+
+
+
+        }
+
+
+
+        
+
+
+
+        console.log('Current type:', passwordField.type); // Debug log
+
+
+
+        
+
+
+
+        if (passwordField.type === 'password') {
+
+
+
+          passwordField.type = 'text';
+
+
+
+          toggleIcon.classList.remove('fa-eye');
+
+
+
+          toggleIcon.classList.add('fa-eye-slash');
+
+
+
+          console.log('Changed to text');
+
+
+
+        } else {
+
+
+
+          passwordField.type = 'password';
+
+
+
+          toggleIcon.classList.remove('fa-eye-slash');
+
+
+
+          toggleIcon.classList.add('fa-eye');
+
+
+
+          console.log('Changed to password');
+
+
+
+        }
+
+
+
+      }
+
+
+
+
+
+
+
+      // Sign up modal functions
+
+
+
+      function openSignUpModal() {
+
+
+
+        document.getElementById('sign-up-modal').style.display = 'flex';
+
+
+
+      }
+
+
+
+
+
+
+
+      function closeSignUpModal() {
+
+
+
+        document.getElementById('sign-up-modal').style.display = 'none';
+
+
+
+        // Clear form
+
+
+
+        const form = document.querySelector('#sign-up-modal form');
+
+
+
+        if (form) {
+
+
+
+          form.reset();
+
+
+
+        }
+
+
+
+      }
+
+
+
+
+
+
+
+      function handleSignUp(event) {
+
+
+
+        event.preventDefault();
+
+
+
+        
+
+
+
+        const form = event.target;
+
+
+
+        
+
+
+
+        // Get form values directly from DOM elements
+
+
+
+        const username = document.getElementById('signup-username').value.trim();
+
+
+
+        const email = document.getElementById('signup-email').value.trim();
+
+
+
+        const password = document.getElementById('signup-password').value;
+
+
+
+        const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+
+
+        
+
+
+
+        console.log('Form values:', { username, email, password, confirmPassword }); // Debug log
+
+
+
+        
+
+
+
+        // Client-side validation with popup alerts
+
+
+
+        if (!username || !email || !password || !confirmPassword) {
+
+
+
+            alert('All fields are required!');
+
+
+
+            return;
+
+
+
+        }
+
+
+
+        
+
+
+
+        if (password.length < 6) {
+
+
+
+            alert('Password must be at least 6 characters (letters or numbers)');
+
+
+
+            return;
+
+
+
+        }
+
+
+
+        
+
+
+
+        if (password !== confirmPassword) {
+
+
+
+            alert('Passwords do not match!');
+
+
+
+            return;
+
+
+
+        }
+
+
+
+        
+
+
+
+        // Email validation
+
+
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+
+        if (!emailRegex.test(email)) {
+
+
+
+            alert('Please enter a valid email address');
+
+
+
+            return;
+
+
+
+        }
+
+
+
+        
+
+
+
+        // Show loading state
+
+
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+
+
+        const originalText = submitBtn.textContent;
+
+
+
+        submitBtn.textContent = 'Creating account...';
+
+
+
+        submitBtn.disabled = true;
+
+
+
+        
+
+
+
+        // Create FormData for submission
+
+
+
+        const formData = new FormData();
+
+
+
+        formData.append('username', username);
+
+
+
+        formData.append('email', email);
+
+
+
+        formData.append('password', password);
+
+
+
+        formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+
+
+
+        
+
+
+
+        // Submit the form
+
+
+
+        fetch('/signup/', {
+
+
+
+          method: 'POST',
+
+
+
+          body: formData,
+
+
+
+          headers: {
+
+
+
+            'X-CSRFToken': getCookie('csrftoken'),
+
+
+
+          },
+
+
+
+        })
+
+
+
+        .then(response => response.json())
+
+
+
+        .then(data => {
+
+
+
+          if (data.success) {
+
+
+
+            showNotification('Account created successfully! Please login.', 'success');
+
+
+
+            closeSignUpModal();
+
+
+
+            // Redirect to login page after a short delay
+
+
+
+            setTimeout(() => {
+
+
+
+              window.location.href = '/login/';
+
+
+
+            }, 1500);
+
+
+
+          } else {
+
+
+
+            showNotification('Error: ' + data.error, 'error');
+
+
+
+          }
+
+
+
+        })
+
+
+
+        .catch(error => {
+
+
+
+          console.error('Error:', error);
+
+
+
+          showNotification('Error creating account. Please try again.', 'error');
+
+
+
+        })
+
+
+
+        .finally(() => {
+
+
+
+          submitBtn.textContent = originalText;
+
+
+
+          submitBtn.disabled = false;
+
+
+
+        });
+
+
+
+      }
+
+
+
+
+
+
+
+      // Simple notification function
+
+
+
+      function showNotification(message, type) {
+
+
+
+        console.log('Notification:', message, type); // Debug log
+
+
+
+        
+
+
+
+        // Try to use existing notification system or create simple alert
+
+
+
+        if (typeof showNotificationMessage === 'function') {
+
+
+
+          showNotificationMessage(message, type);
+
+
+
+        } else {
+
+
+
+          // Simple alert as fallback
+
+
+
+          if (type === 'error') {
+
+
+
+            alert('Error: ' + message);
+
+
+
+          } else if (type === 'success') {
+
+
+
+            alert('Success: ' + message);
+
+
+
+          } else {
+
+
+
+            alert(message);
+
+
+
+          }
+
+
+
+        }
+
+
+
+      }
+
+
+
+      
+
+
+
+      // Get CSRF token
+
+
+
+      function getCookie(name) {
+
+
+
+        let cookieValue = null;
+
+
+
+        if (document.cookie && document.cookie !== '') {
+
+
+
+          const cookies = document.cookie.split(';');
+
+
+
+          for (let i = 0; i < cookies.length; i++) {
+
+
+
+            const cookie = cookies[i].trim();
+
+
+
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+
+
+
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+
+
+
+              break;
+
+
+
+            }
+
+
+
+          }
+
+
+
+        }
+
+
+
+        return cookieValue;
+
+
+
+      }
+
+
+
+
+
+
+
+      // Handle user login form submission
+
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+
+
+
+        const userLoginForm = document.getElementById('user-login-form');
+
+
+
+        if (userLoginForm) {
+
+
+
+          userLoginForm.addEventListener('submit', function(e) {
+
+
+
+            e.preventDefault();
+
+
+
+            
+
+
+
+            const formData = new FormData(this);
+
+
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+
+
+
+            const originalText = submitBtn.textContent;
+
+
+
+            
+
+
+
+            // Show loading state
+
+
+
+            submitBtn.textContent = 'Logging in...';
+
+
+
+            submitBtn.disabled = true;
+
+
+
+            
+
+
+
+            fetch('{% url "main:user_login" %}', {
+
+
+
+              method: 'POST',
+
+
+
+              body: formData,
+
+
+
+              headers: {
+
+
+
+                'X-Requested-With': 'XMLHttpRequest'
+
+
+
+              }
+
+
+
+            })
+
+
+
+            .then(response => response.json())
+
+
+
+            .then(data => {
+
+
+
+              if (data.success) {
+
+
+
+                // Direct redirect without success message
+
+
+
+                window.location.href = data.redirect;
+
+
+
+              } else {
+
+
+
+                showNotification(data.message, 'error');
+
+
+
+              }
+
+
+
+            })
+
+
+
+            .catch(error => {
+
+
+
+              console.error('Login error:', error);
+
+
+
+              showNotification('Login failed. Please try again.', 'error');
+
+
+
+            })
+
+
+
+            .finally(() => {
+
+
+
+              submitBtn.textContent = originalText;
+
+
+
+              submitBtn.disabled = false;
+
+
+
+            });
+
+
+
+          });
+
+
+
+        }
+
+
+
+        
+
+
+
+        // Handle admin login form submission
+
+
+
+        const adminLoginForm = document.getElementById('admin-login-form');
+
+
+
+        if (adminLoginForm) {
+
+
+
+          adminLoginForm.addEventListener('submit', function(e) {
+
+
+
+            e.preventDefault();
+
+
+
+            
+
+
+
+            const formData = new FormData(this);
+
+
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+
+
+
+            const originalText = submitBtn.textContent;
+
+
+
+            
+
+
+
+            // Show loading state
+
+
+
+            submitBtn.textContent = 'Logging in...';
+
+
+
+            submitBtn.disabled = true;
+
+
+
+            
+
+
+
+            fetch('{% url "main:admin_login" %}', {
+
+
+
+              method: 'POST',
+
+
+
+              body: formData,
+
+
+
+              headers: {
+
+
+
+                'X-Requested-With': 'XMLHttpRequest'
+
+
+
+              }
+
+
+
+            })
+
+
+
+            .then(response => response.json())
+
+
+
+            .then(data => {
+
+
+
+              if (data.success) {
+
+
+
+                // Direct redirect without success message
+
+
+
+                window.location.href = data.redirect;
+
+
+
+              } else {
+
+
+
+                showNotification(data.message, 'error');
+
+
+
+              }
+
+
+
+            })
+
+
+
+            .catch(error => {
+
+
+
+              console.error('Login error:', error);
+
+
+
+              showNotification('Login failed. Please try again.', 'error');
+
+
+
+            })
+
+
+
+            .finally(() => {
+
+
+
+              submitBtn.textContent = originalText;
+
+
+
+              submitBtn.disabled = false;
+
+
+
+            });
+
+
+
+          });
+
+
+
+        }
+
+
+
+      });
+
+
+
+
+
+
+
+      // Show forgot password modal
+
+
+
+      function showForgotPassword() {
+
+
+
+        const modal = document.getElementById("forgot-password-modal");
+
+
+
+        modal.style.display = "flex";
+
+
+
+      }
+
+
+
+
+
+
+
+      // Close forgot password modal
+
+
+
+      function closeForgotPassword() {
+
+
+
+        const modal = document.getElementById("forgot-password-modal");
+
+
+
+        modal.style.display = "none";
+
+
+
+      }
+
+
+
+
+
+
+
+      // Handle forgot password
+
+
+
+      function handleForgotPassword(event) {
+
+
+
+        event.preventDefault();
+
+
+
+        const formData = new FormData(event.target);
+
+
+
+        const data = Object.fromEntries(formData);
+
+
+
+
+
+
+
+        if (data.resetIdentifier) {
+
+
+
+          showNotification(
+
+
+
+            "Password reset link sent to your email!",
+
+
+
+            "success",
+
+
+
+          );
+
+
+
+          closeForgotPassword();
+
+
+
+        } else {
+
+
+
+          showNotification(
+
+
+
+            "Please enter your email or registration ID",
+
+
+
+            "error",
+
+
+
+          );
+
+
+
+        }
+
+
+
+      }
+
+
+
+
+
+
+
+      // Close modals when clicking outside
+
+
+
+      window.onclick = function (event) {
+
+
+
+        const forgotModal = document.getElementById("forgot-password-modal");
+
+
+
+        const signUpModal = document.getElementById("sign-up-modal");
+
+
+
+        
+
+
+
+        if (event.target === forgotModal) {
+
+
+
+          closeForgotPassword();
+
+
+
+        }
+
+
+
+        
+
+
+
+        if (event.target === signUpModal) {
+
+
+
+          closeSignUpModal();
+
+
+
+        }
+
+
+
+      };
+
+
+
+      
+
+
+
+      // Close modal with Escape key
+
+
+
+      document.addEventListener('keydown', function(event) {
+
+
+
+        if (event.key === 'Escape') {
+
+
+
+          closeSignUpModal();
+
+
+
+          closeForgotPassword();
+
+
+
+        }
+
+
+
+      });
+
+
+
+      
+
+
+
+      // Real-time password matching validation
+
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+
+
+
+        const passwordField = document.getElementById('signup-password');
+
+
+
+        const confirmPasswordField = document.getElementById('signup-confirm-password');
+
+
+
+        
+
+
+
+        if (passwordField && confirmPasswordField) {
+
+
+
+          confirmPasswordField.addEventListener('input', function() {
+
+
+
+            const password = passwordField.value;
+
+
+
+            const confirmPassword = this.value;
+
+
+
+            
+
+
+
+            if (confirmPassword.length > 0 && password !== confirmPassword) {
+
+
+
+              this.style.borderColor = '#e74c3c';
+
+
+
+              this.style.backgroundColor = '#fdf2f2';
+
+
+
+            } else if (confirmPassword.length > 0 && password === confirmPassword) {
+
+
+
+              this.style.borderColor = '#27ae60';
+
+
+
+              this.style.backgroundColor = '#f2fdf2';
+
+
+
+            } else {
+
+
+
+              this.style.borderColor = '#e1e5e9';
+
+
+
+              this.style.backgroundColor = '#fff';
+
+
+
+            }
+
+
+
+          });
+
+
+
+          
+
+
+
+          passwordField.addEventListener('input', function() {
+
+
+
+            const password = this.value;
+
+
+
+            const confirmPassword = confirmPasswordField.value;
+
+
+
+            
+
+
+
+            if (confirmPassword.length > 0 && password !== confirmPassword) {
+
+
+
+              confirmPasswordField.style.borderColor = '#e74c3c';
+
+
+
+              confirmPasswordField.style.backgroundColor = '#fdf2f2';
+
+
+
+            } else if (confirmPassword.length > 0 && password === confirmPassword) {
+
+
+
+              confirmPasswordField.style.borderColor = '#27ae60';
+
+
+
+              confirmPasswordField.style.backgroundColor = '#f2fdf2';
+
+
+
+            } else {
+
+
+
+              confirmPasswordField.style.borderColor = '#e1e5e9';
+
+
+
+              confirmPasswordField.style.backgroundColor = '#fff';
+
+
+
+            }
+
+
+
+          });
+
+
+
+        }
+
+
+
+      });
+
+
+
+    </script>
+
+
+
+  </body>
+
+
+
+</html>
+
+
+

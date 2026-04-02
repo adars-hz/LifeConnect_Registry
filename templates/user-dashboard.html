@@ -1,0 +1,899 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Dashboard - Life Connect Registry</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 40px 20px;
+
+            color: #666;
+
+        }
+
+        
+
+        .empty-icon {
+
+            font-size: 48px;
+
+            color: #ccc;
+
+            margin-bottom: 20px;
+
+        }
+
+        
+
+        .empty-state h3 {
+
+            color: #333;
+
+            margin-bottom: 15px;
+
+            font-size: 24px;
+
+        }
+
+        
+
+        .empty-state p {
+
+            margin-bottom: 10px;
+
+            line-height: 1.6;
+
+        }
+
+        
+
+        .empty-actions {
+
+            margin-top: 25px;
+
+        }
+
+        
+
+        .empty-actions .btn {
+
+            padding: 12px 24px;
+
+            font-size: 16px;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+        
+
+        .empty-actions .btn-primary {
+
+            background-color: #007bff;
+
+            color: white;
+
+            border: 1px solid #007bff;
+
+        }
+
+        
+
+        .empty-actions .btn-primary:hover {
+
+            background-color: #0056b3;
+
+            color: white;
+
+            text-decoration: none;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <div class="nav-logo">
+
+                <i class="fas fa-heartbeat"></i>
+
+                <span>Life Connect Registry</span>
+
+            </div>
+
+            <ul class="nav-menu">
+
+                <li><a href="{% url 'main:home' %}">Home</a></li>
+
+                <li><a href="{% url 'main:about' %}">About</a></li>
+
+                <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+                {% if user.is_authenticated %}
+
+                    <li><a href="{% url 'main:dashboard' %}" class="active">Dashboard</a></li>
+
+                    <li><a href="{% url 'main:logout' %}">Logout</a></li>
+
+                {% else %}
+
+                    <li><a href="{% url 'main:register' %}">Register</a></li>
+
+                    <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+                {% endif %}
+
+            </ul>
+
+            <div class="hamburger">
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Dashboard Header -->
+
+    <section class="dashboard-header">
+
+        <div class="container">
+
+            <div class="dashboard-welcome">
+
+                <h1>Welcome, <span id="user-name">{{ user.get_full_name|default:user.username }}</span></h1>
+
+                <p>Manage your organ donation profile and track your application status</p>
+
+            </div>
+
+            <div class="dashboard-actions">
+
+                <a href="{% url 'main:register' %}" class="btn btn-primary">
+
+                    <i class="fas fa-user-plus"></i> Register as Donor/Recipient
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Dashboard Content -->
+
+    <section class="dashboard-content">
+
+        <div class="container">
+
+            <!-- User Info Card -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2><i class="fas fa-user"></i> Profile Information</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="info-grid">
+
+                        <div class="info-item">
+
+                            <label>Registration ID:</label>
+
+                            <span id="registration-id" class="highlight">{{ registration_id|default:'N/A' }}</span>
+
+                        </div>
+
+                        <div class="info-item">
+
+                            <label>Full Name:</label>
+
+                            <span id="user-fullname">{{ user.get_full_name|default:user.username }}</span>
+
+                        </div>
+
+                        <div class="info-item">
+
+                            <label>Email:</label>
+
+                            <span id="user-email">{{ user.email }}</span>
+
+                        </div>
+
+                        <div class="info-item">
+
+                            <label>Phone:</label>
+
+                            <span id="user-phone">{{ user.phone|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="info-item">
+
+                            <label>Blood Group:</label>
+
+                            <span id="user-blood">{{ user.blood_group|default:'Not provided' }}</span>
+
+                        </div>
+
+                        <div class="info-item">
+
+                            <label>Date of Birth:</label>
+
+                            <span id="user-dob">{{ user.date_of_birth|date:'F d, Y'|default:'Not provided' }}</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Status Tracker -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2><i class="fas fa-tasks"></i> Application Status Tracker</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% if user.user_type == 'donor' and user.donor_profile %}
+
+                    <div class="status-timeline">
+
+                        <!-- Registration Submitted - Always completed -->
+
+                        <div class="status-item completed">
+
+                            <div class="status-icon">
+
+                                <i class="fas fa-check"></i>
+
+                            </div>
+
+                            <div class="status-content">
+
+                                <h3>Registration Submitted</h3>
+
+                                <p>Your application has been successfully submitted</p>
+
+                                <span class="status-date">{{ user.donor_profile.created_at|date:'F d, Y' }}</span>
+
+                            </div>
+
+                        </div>
+
+                        
+
+                        <!-- Document Verification - Based on verification status -->
+
+                        <div class="status-item 
+
+                            {% if verification_status == 'pending' %}current{% elif verification_status == 'under_review' %}completed{% elif verification_status == 'approved' %}completed{% elif verification_status == 'rejected' %}completed{% else %}pending{% endif %}">
+
+                            <div class="status-icon">
+
+                                {% if verification_status == 'pending' %}
+
+                                    <i class="fas fa-spinner fa-spin"></i>
+
+                                {% elif verification_status == 'under_review' %}
+
+                                    <i class="fas fa-check"></i>
+
+                                {% elif verification_status == 'approved' %}
+
+                                    <i class="fas fa-check"></i>
+
+                                {% elif verification_status == 'rejected' %}
+
+                                    <i class="fas fa-times"></i>
+
+                                {% else %}
+
+                                    <i class="fas fa-spinner fa-spin"></i>
+
+                                {% endif %}
+
+                            </div>
+
+                            <div class="status-content">
+
+                                <h3>Document Verification</h3>
+
+                                {% if verification_status == 'pending' %}
+
+                                    <p>Verifying your submitted documents</p>
+
+                                    <span class="status-date">In Progress</span>
+
+                                {% elif verification_status == 'under_review' %}
+
+                                    <p>Your application is under review</p>
+
+                                    <span class="status-date">Under Review</span>
+
+                                {% elif verification_status == 'approved' %}
+
+                                    <p>Your application has been finally approved</p>
+
+                                    <span class="status-date">Completed</span>
+
+                                {% elif verification_status == 'rejected' %}
+
+                                    <p>Your application has been rejected</p>
+
+                                    <span class="status-date">Rejected</span>
+
+                                {% else %}
+
+                                    <p>Verifying your submitted documents</p>
+
+                                    <span class="status-date">In Progress</span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                        
+
+                        <!-- Final Approval - Based on verification status -->
+
+                        <div class="status-item 
+
+                            {% if verification_status == 'approved' %}completed{% elif verification_status == 'rejected' %}completed{% else %}pending{% endif %}">
+
+                            <div class="status-icon">
+
+                                {% if verification_status == 'approved' %}
+
+                                    <i class="fas fa-check"></i>
+
+                                {% elif verification_status == 'rejected' %}
+
+                                    <i class="fas fa-times"></i>
+
+                                {% else %}
+
+                                    <i class="fas fa-clock"></i>
+
+                                {% endif %}
+
+                            </div>
+
+                            <div class="status-content">
+
+                                <h3>Final Approval</h3>
+
+                                {% if verification_status == 'approved' %}
+
+                                    <p>Your application has been finally approved</p>
+
+                                    <span class="status-date">Completed</span>
+
+                                {% elif verification_status == 'rejected' %}
+
+                                    <p>Your application has been rejected</p>
+
+                                    <span class="status-date">Rejected</span>
+
+                                {% else %}
+
+                                    <p>Awaiting final approval from admin</p>
+
+                                    <span class="status-date">Pending</span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% elif user.user_type == 'recipient' and user.recipient_profile %}
+
+                    <div class="status-timeline">
+
+                        <!-- Registration Submitted - Always completed -->
+
+                        <div class="status-item completed">
+
+                            <div class="status-icon">
+
+                                <i class="fas fa-check"></i>
+
+                            </div>
+
+                            <div class="status-content">
+
+                                <h3>Registration Submitted</h3>
+
+                                <p>Your application has been successfully submitted</p>
+
+                                <span class="status-date">{{ user.recipient_profile.created_at|date:'F d, Y' }}</span>
+
+                            </div>
+
+                        </div>
+
+                        
+
+                        <!-- Document Verification - Based on verification status -->
+
+                        <div class="status-item 
+
+                            {% if verification_status == 'pending' %}current{% elif verification_status == 'under_review' %}completed{% elif verification_status == 'approved' %}completed{% elif verification_status == 'rejected' %}completed{% else %}pending{% endif %}">
+
+                            <div class="status-icon">
+
+                                {% if verification_status == 'pending' %}
+
+                                    <i class="fas fa-spinner fa-spin"></i>
+
+                                {% elif verification_status == 'under_review' %}
+
+                                    <i class="fas fa-check"></i>
+
+                                {% elif verification_status == 'approved' %}
+
+                                    <i class="fas fa-check"></i>
+
+                                {% elif verification_status == 'rejected' %}
+
+                                    <i class="fas fa-times"></i>
+
+                                {% else %}
+
+                                    <i class="fas fa-spinner fa-spin"></i>
+
+                                {% endif %}
+
+                            </div>
+
+                            <div class="status-content">
+
+                                <h3>Document Verification</h3>
+
+                                {% if verification_status == 'pending' %}
+
+                                    <p>Verifying your submitted documents</p>
+
+                                    <span class="status-date">In Progress</span>
+
+                                {% elif verification_status == 'under_review' %}
+
+                                    <p>Your application is under review</p>
+
+                                    <span class="status-date">Under Review</span>
+
+                                {% elif verification_status == 'approved' %}
+
+                                    <p>Your application has been finally approved</p>
+
+                                    <span class="status-date">Completed</span>
+
+                                {% elif verification_status == 'rejected' %}
+
+                                    <p>Your application has been rejected</p>
+
+                                    <span class="status-date">Rejected</span>
+
+                                {% else %}
+
+                                    <p>Awaiting final approval from admin</p>
+
+                                    <span class="status-date">Pending</span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                        
+
+                        <!-- Final Approval - Based on verification status -->
+
+                        <div class="status-item 
+
+                            {% if verification_status == 'approved' %}completed{% elif verification_status == 'rejected' %}completed{% else %}pending{% endif %}">
+
+                            <div class="status-icon">
+
+                                {% if verification_status == 'approved' %}
+
+                                    <i class="fas fa-check"></i>
+
+                                {% elif verification_status == 'rejected' %}
+
+                                    <i class="fas fa-times"></i>
+
+                                {% else %}
+
+                                    <i class="fas fa-clock"></i>
+
+                                {% endif %}
+
+                            </div>
+
+                            <div class="status-content">
+
+                                <h3>Final Approval</h3>
+
+                                {% if verification_status == 'approved' %}
+
+                                    <p>Your registration has been approved</p>
+
+                                    <span class="status-date">Completed</span>
+
+                                {% elif verification_status == 'rejected' %}
+
+                                    <p>Your application has been rejected</p>
+
+                                    <span class="status-date">Rejected</span>
+
+                                {% else %}
+
+                                    <p>Awaiting final approval from admin</p>
+
+                                    <span class="status-date">Pending</span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% else %}
+
+                    <!-- User hasn't registered yet -->
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+
+                            <i class="fas fa-clipboard-list"></i>
+
+                        </div>
+
+                        <h3>No Application Yet</h3>
+
+                        <p>You haven't registered as a donor or recipient yet.</p>
+
+                        <p>Please complete your registration to track your application status here.</p>
+
+                        <div class="empty-actions">
+
+                            <a href="{% url 'main:register' %}" class="btn btn-primary">
+
+                                <i class="fas fa-user-plus"></i> Register Now
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+
+            <!-- Required Organ (for recipients) -->
+
+            {% if user.user_type == 'recipient' %}
+
+            <div class="dashboard-card" id="required-organ-card">
+
+                <div class="card-header">
+
+                    <h2><i class="fas fa-heart"></i> Required Organ</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="required-organ">
+
+                        <div class="organ-icon large">
+
+                            <i class="fas fa-kidney"></i>
+
+                        </div>
+
+                        <div class="organ-details">
+
+                            <h3>Kidney</h3>
+
+                            <p><strong>Urgency Level:</strong> <span class="urgency-high">High</span></p>
+
+                            <p><strong>Hospital:</strong> {{ profile.hospital|default:'Not specified' }}</p>
+
+                            <p><strong>Doctor:</strong> {{ profile.doctor_name|default:'Not specified' }}</p>
+
+                            <p><strong>Registration Date:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+      <div class="container">
+
+        <div class="footer-content">
+
+          <div class="footer-section">
+
+            <div class="footer-logo">
+
+              <i class="fas fa-heartbeat"></i>
+
+              <span>Life Connect Registry</span>
+
+            </div>
+
+            <p>
+
+              Saving lives through organ donation and transplantation services
+
+            </p>
+
+            <div class="social-links">
+
+              <a href="#"><i class="fab fa-facebook"></i></a>
+
+              <a href="#"><i class="fab fa-twitter"></i></a>
+
+              <a href="#"><i class="fab fa-instagram"></i></a>
+
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+
+            </div>
+
+          </div>
+
+          <div class="footer-section">
+
+            <h3>Quick Links</h3>
+
+            <ul>
+
+              <li><a href="{% url 'main:home' %}">Home</a></li>
+
+              <li><a href="{% url 'main:about' %}">About</a></li>
+
+              <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+              <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+            </ul>
+
+          </div>
+
+          <!-- <div class="footer-section">
+
+            <h3>Services</h3>
+
+            <ul>
+
+              <li><a href="#">Verification Status</a></li>
+
+              <li><a href="#">Hospital Network</a></li>
+
+              <li><a href="#">Medical Support</a></li>
+
+              <li><a href="#">Emergency Contact</a></li>
+
+            </ul>
+
+          </div> -->
+
+          <div class="footer-section">
+
+            <h3>Contact Info</h3>
+
+            <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+
+            <p><i class="fas fa-envelope"></i> info@lifeconnect.org</p>
+
+            <p>
+
+              <i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical
+
+              City
+
+            </p>
+
+            <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</p>
+
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+          <p>
+
+            &copy; 2026 Life Connect Registry. All rights reserved. |
+
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <script>
+
+        // Initialize dashboard
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            updateUserInterface();
+
+        });
+
+
+
+        function updateUserInterface() {
+
+            // Show/hide sections based on user type
+
+            const userType = '{{ user.user_type|default:"donor" }}';
+
+            if (userType === 'recipient') {
+
+                const organsCard = document.getElementById('organs-card');
+
+                const requiredOrganCard = document.getElementById('required-organ-card');
+
+                if (organsCard) organsCard.style.display = 'none';
+
+                if (requiredOrganCard) requiredOrganCard.style.display = 'block';
+
+            } else {
+
+                const organsCard = document.getElementById('organs-card');
+
+                const requiredOrganCard = document.getElementById('required-organ-card');
+
+                if (organsCard) organsCard.style.display = 'block';
+
+                if (requiredOrganCard) requiredOrganCard.style.display = 'none';
+
+            }
+
+
+
+            // Update user type badge
+
+            const userTypeElement = document.getElementById('user-type');
+
+            if (userTypeElement) {
+
+                if (userType === 'donor') {
+
+                    userTypeElement.className = 'badge badge-donor';
+
+                } else {
+
+                    userTypeElement.className = 'badge badge-recipient';
+
+                }
+
+            }
+
+        }
+
+
+
+        function editProfile() {
+
+            showNotification('Profile editing feature coming soon!', 'info');
+
+        }
+
+
+
+        function logout() {
+
+            if (confirm('Are you sure you want to logout?')) {
+
+                showNotification('Logging out...', 'success');
+
+                setTimeout(() => {
+
+                    window.location.href = 'login.html';
+
+                }, 1500);
+
+            }
+
+        }
+    </script>
+</body>
+</html>
+

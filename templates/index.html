@@ -1,0 +1,568 @@
+{% load static %}
+
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Life Connect Registry - Organ Donation Platform</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <link
+
+      rel="stylesheet"
+
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+
+    />
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+      <div class="nav-container">
+
+        <div class="nav-logo">
+
+          <i class="fas fa-heartbeat"></i>
+
+          <span>Life Connect Registry</span>
+
+        </div>
+
+        <ul class="nav-menu">
+
+          <li><a href="{% url 'main:home' %}">Home</a></li>
+
+          <li><a href="{% url 'main:about' %}">About</a></li>
+
+          <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+          {% if user.is_authenticated %}
+
+          <li><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
+
+          <li><a href="{% url 'main:logout' %}">Logout</a></li>
+
+          {% else %}
+
+          <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+          {% endif %}
+
+        </ul>
+
+        <div class="hamburger">
+
+          <span></span>
+
+          <span></span>
+
+          <span></span>
+
+        </div>
+
+      </div>
+
+    </nav>
+
+
+
+    <!-- Hero Section -->
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <h1>Save a Life, Become an Organ Donor</h1>
+
+        <p>
+
+          Join thousands of heroes who have made the selfless decision to donate
+
+          organs and give others a second chance at life
+
+        </p>
+
+        <div class="hero-buttons">
+
+          {% if user.is_authenticated %}
+
+          <a href="{% url 'main:register' %}" class="btn btn-primary"
+
+            >Become a Donor</a
+
+          >
+
+          <a href="{% url 'main:register' %}" class="btn btn-secondary"
+
+            >Register as Recipient</a
+
+          >
+
+          {% else %}
+
+          <a href="{% url 'main:user_login' %}" class="btn btn-primary"
+
+            >Sign Up to Get Started</a
+
+          >
+
+          <a href="{% url 'main:user_login' %}" class="btn btn-secondary"
+
+            >Login</a
+
+          >
+
+          {% endif %}
+
+        </div>
+
+      </div>
+
+      <div class="hero-image">
+
+        <i class="fas fa-hands-helping-heart"></i>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- Statistics Section -->
+
+    <section class="statistics">
+
+      <div class="container">
+
+        <h2>Our Impact</h2>
+
+        <div class="stats-grid">
+
+          <div class="stat-card">
+
+            <div class="stat-icon">
+
+              <i class="fas fa-heart"></i>
+
+            </div>
+
+            <h3 class="stat-number">15,234</h3>
+
+            <p class="stat-label">Lives Saved</p>
+
+          </div>
+
+          <div class="stat-card">
+
+            <div class="stat-icon">
+
+              <i class="fas fa-users"></i>
+
+            </div>
+
+            <h3 class="stat-number">45,678</h3>
+
+            <p class="stat-label">Registered Donors</p>
+
+          </div>
+
+          <div class="stat-card">
+
+            <div class="stat-icon">
+
+              <i class="fas fa-hospital"></i>
+
+            </div>
+
+            <h3 class="stat-number">8,901</h3>
+
+            <p class="stat-label">Successful Transplants</p>
+
+          </div>
+
+          <div class="stat-card">
+
+            <div class="stat-icon">
+
+              <i class="fas fa-clock"></i>
+
+            </div>
+
+            <h3 class="stat-number">24/7</h3>
+
+            <p class="stat-label">Support Available</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- Awareness Section -->
+
+    <section class="awareness">
+
+      <div class="container">
+
+        <h2>Why Organ Donation Matters</h2>
+
+        <div class="awareness-grid">
+
+          <div class="awareness-card">
+
+            <div class="awareness-icon">
+
+              <i class="fas fa-user-friends"></i>
+
+            </div>
+
+            <h3>Save Multiple Lives</h3>
+
+            <p>
+
+              One organ donor can save up to 8 lives and improve many more
+
+              through tissue donation
+
+            </p>
+
+          </div>
+
+          <div class="awareness-card">
+
+            <div class="awareness-icon">
+
+              <i class="fas fa-clock"></i>
+
+            </div>
+
+            <h3>Every 10 Minutes</h3>
+
+            <p>
+
+              Someone is added to the transplant waiting list every 10 minutes
+
+            </p>
+
+          </div>
+
+          <div class="awareness-card">
+
+            <div class="awareness-icon">
+
+              <i class="fas fa-chart-line"></i>
+
+            </div>
+
+            <h3>90% Success Rate</h3>
+
+            <p>
+
+              Organ transplants have a 90% success rate when properly matched
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- Process Section -->
+
+    <section class="process">
+
+      <div class="container">
+
+        <h2>Donation Process</h2>
+
+        <div class="process-steps">
+
+          <div class="step">
+
+            <div class="step-number">1</div>
+
+            <h3>Register</h3>
+
+            <p>Sign up as a donor with your personal and medical information</p>
+
+          </div>
+
+          <div class="step">
+
+            <div class="step-number">2</div>
+
+            <h3>Verification</h3>
+
+            <p>Our medical team reviews your application and documents</p>
+
+          </div>
+
+          <div class="step">
+
+            <div class="step-number">3</div>
+
+            <h3>Matching</h3>
+
+            <p>Get matched with recipients who need your organ type</p>
+
+          </div>
+
+          <div class="step">
+
+            <div class="step-number">4</div>
+
+            <h3>Save Life</h3>
+
+            <p>
+
+              Complete the donation process and give someone a new beginning
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- CTA Section -->
+
+    <section class="cta">
+
+      <div class="container">
+
+        <h2>Ready to Make a Difference?</h2>
+
+        <p>Join our community of life-savers and help those in need</p>
+
+        <div class="cta-buttons">
+
+          {% if user.is_authenticated %}
+
+          <a href="{% url 'main:register' %}" class="btn btn-primary btn-large"
+
+            >Register Now</a
+
+          >
+
+          {% else %}
+
+          <a href="{% url 'main:user_login' %}" class="btn btn-primary btn-large"
+
+            >Sign Up to Register</a
+
+          >
+
+          {% endif %}
+
+          <a href="{% url 'main:about' %}" class="btn btn-secondary"
+
+            >Learn More</a
+
+          >
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+      <div class="container">
+
+        <div class="footer-content">
+
+          <div class="footer-section">
+
+            <div class="footer-logo">
+
+              <i class="fas fa-heartbeat"></i>
+
+              <span>Life Connect Registry</span>
+
+            </div>
+
+            <p>
+
+              Saving lives through organ donation and transplantation services
+
+            </p>
+
+            <div class="social-links">
+
+              <a href="#"><i class="fab fa-facebook"></i></a>
+
+              <a href="#"><i class="fab fa-twitter"></i></a>
+
+              <a href="#"><i class="fab fa-instagram"></i></a>
+
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+
+            </div>
+
+          </div>
+
+          <div class="footer-section">
+
+            <h3>Quick Links</h3>
+
+            <ul>
+
+              <li><a href="{% url 'main:home' %}">Home</a></li>
+
+              <li><a href="{% url 'main:about' %}">About</a></li>
+
+              <li><a href="{% url 'main:faq' %}">FAQ</a></li>
+
+              <li><a href="{% url 'main:user_login' %}">Login</a></li>
+
+            </ul>
+
+          </div>
+
+          <!-- <div class="footer-section">
+
+            <h3>Services</h3>
+
+            <ul>
+
+              <li><a href="#">Verification Status</a></li>
+
+              <li><a href="#">Hospital Network</a></li>
+
+              <li><a href="#">Medical Support</a></li>
+
+              <li><a href="#">Emergency Contact</a></li>
+
+            </ul>
+
+          </div> -->
+
+          <div class="footer-section">
+
+            <h3>Contact Info</h3>
+
+            <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+
+            <p><i class="fas fa-envelope"></i> info@lifeconnect.org</p>
+
+            <p>
+
+              <i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical
+
+              City
+
+            </p>
+
+            <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</p>
+
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+          <p>
+
+            &copy; 2026 Life Connect Registry. All rights reserved. |
+
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <script>
+
+        // Prevent back button access after logout
+
+        window.onload = function() {
+
+            // Check if user is authenticated
+
+            var isAuthenticated = "{{ user.is_authenticated }}" === "True";
+
+            
+
+            if (isAuthenticated) {
+
+                // User is logged in, allow normal navigation
+
+                console.log('User is authenticated');
+
+            } else {
+
+                // User is not authenticated, check for cached pages
+
+                window.addEventListener('pageshow', function(event) {
+
+                    // If page is loaded from cache (back button)
+
+                    if (event.persisted) {
+
+                        window.location.reload();
+
+                    }
+
+                });
+
+                
+
+                // Disable browser back button for logged out users
+
+                history.pushState(null, null, location.href);
+
+                window.onpopstate = function () {
+
+                    history.go(1);
+
+                };
+
+            }
+
+        };
+
+    </script>
+
+  </body>
+
+</html>
+
