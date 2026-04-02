@@ -13,6 +13,7 @@ class User(AbstractUser):
         ('admin', 'Admin'),
     ]
     
+    print(user_type)
     BLOOD_GROUPS = [
         ('A+', 'A+'),
         ('A-', 'A-'),
